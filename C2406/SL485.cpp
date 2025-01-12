@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  10:29:45 - 11/01/2025
+  22:33:55 - 11/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,17 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
-#define NAME "TEMP"
+#define NAME "SL485"
 
 void solve()
 {
+    int n, k;
+    string s;
+    cin >> n >> k >> s;
+    vector<int> dp(n + 1, 0);
+    dp[n] = 
 }
 
 signed main()

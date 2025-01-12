@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  10:29:45 - 11/01/2025
+  20:30:05 - 11/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,18 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
-#define NAME "TEMP"
+#define NAME "THT_NA_24_3"
 
 void solve()
 {
+    string s;
+    int k;
+    cin >> s >> k;
+    int shift = k % 10;
+    for (int i = 0; i < s.size(); i++)
+        cout << (s[i] - '0' + shift) % 10;
 }
 
 signed main()

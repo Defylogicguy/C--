@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  10:29:45 - 11/01/2025
+  20:17:44 - 12/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,23 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
-#define NAME "TEMP"
+#define NAME "SEGCOVER2"
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a(n);
+    for (int i = 0; i < n; i++)
+        cin >> a[i].first >> a[i].second;
+    sort(all(a));
+    set<pair<int, int>> st;
+    for (int i = 0; i < n - 1; i++)
+        if (a[i].second >= a[i + 1].first)
+            st.insert(a[i]), st.insert(a[i + 1]);
+    cout << n - st.size() << endl;
 }
 
 signed main()

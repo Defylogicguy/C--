@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  10:29:45 - 11/01/2025
+  09:16:38 - 11/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,31 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
-#define NAME "TEMP"
+#define NAME "SHV_PERM"
+
+bool check(vector<int> a, int k)
+{
+    int cnt = 0;
+    for (int i = 0; i < a.size(); i++)
+        for (int j = i + 1; j < a.size(); j++)
+            if (a[i] > a[j])
+                cnt++;
+    return cnt == k;
+}
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    iota(all(a), 1);
+    int cnt = 0;
+    do
+        cnt += check(a, k);
+    while (next_permutation(all(a)));
+    cout << cnt << endl;
 }
 
 signed main()

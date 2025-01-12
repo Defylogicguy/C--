@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  10:29:45 - 11/01/2025
+  14:15:02 - 11/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,18 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
-#define NAME "TEMP"
+#define NAME "SET"
 
 void solve()
 {
+    int k, a, b;
+    cin >> k >> a >> b;
+    int q;
+    cin >> q;
+    map<int, int> mp;
+    
 }
 
 signed main()
@@ -31,7 +37,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();
