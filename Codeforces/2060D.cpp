@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:17:44 - 12/01/2025
+  21:54:14 - 19/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,25 +12,28 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "SEGCOVER2"
+#define NAME "2060D"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> a(n);
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    sort(all(a), [](pair<int, int> a, pair<int, int> b)
-         { return a.second == b.second ? a.first < b.first : a.second < b.second; });
-    int cur = -(1e9 + 7), cnt = 0;
-    for (int i = 0; i < n; i++)
-        if (cur <= a[i].first)
+        cin >> a[i];
+    for (int i = 0; i < n - 1; i++)
+        if (a[i] > a[i + 1])
         {
-            cnt++;
-            cur = a[i].second;
+            cout << "NO\n";
+            return;
         }
-    cout << n - cnt << endl;
+        else
+        {
+            int _min = min(a[i], a[i + 1]);
+            a[i] -= _min;
+            a[i + 1] -= _min;
+        }
+    cout << "YES\n";
 }
 
 signed main()
@@ -46,7 +49,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();

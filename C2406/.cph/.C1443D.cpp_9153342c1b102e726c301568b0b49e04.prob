@@ -1,0 +1,1 @@
+{"name":"Local: C1443D","url":"c:\\Users\\ngtua\\OneDrive\\Documents\\C++\\C2406\\C1443D.cpp","tests":[{"id":1736866489775,"input":"4\n3\n1 2 1\n5\n11 7 9 6 8\n5\n1 3 1 3 1\n4\n5 2 1 10\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ngtua\\OneDrive\\Documents\\C++\\C2406\\C1443D.cpp","group":"local","local":true}

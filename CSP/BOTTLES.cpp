@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:17:44 - 12/01/2025
+  21:12:25 - 23/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,25 +12,31 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "SEGCOVER2"
+#define NAME "BOTTLES"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> a(n);
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    sort(all(a), [](pair<int, int> a, pair<int, int> b)
-         { return a.second == b.second ? a.first < b.first : a.second < b.second; });
-    int cur = -(1e9 + 7), cnt = 0;
-    for (int i = 0; i < n; i++)
-        if (cur <= a[i].first)
-        {
-            cnt++;
-            cur = a[i].second;
-        }
-    cout << n - cnt << endl;
+        cin >> a[i];
+    vector<int> dp(n + 2, LLONG_MAX);
+    dp[0] = 0;
+
+    deque<int> dq;
+    dq.pb(0);
+    for (int i = 1; i <= n + 1; i++)
+    {
+        while (dq.size() and dq.front() < i - k)
+            dq.pop_front();
+        dp[i] = dp[dq.front()] + (i < n + 1 ? a[i - 1] : 0);
+        while (dq.size() and dp[dq.back()] >= dp[i])
+            dq.pop_back();
+        dq.pb(i);
+    }
+
+    cout << accumulate(all(a), 0ll) - dp[n + 1] << endl;
 }
 
 signed main()

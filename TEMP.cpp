@@ -10,30 +10,26 @@ using namespace std;
 #define rall(x) x.rbegin(), x.rend()
 #define heap priority_queue
 #define pb push_back
-#define MOD 1000000007SE
+#define MOD 1000000007
 #define endl '\n'
 #define NAME "TEMP"
 
-void solve()
-{
-}
+void solve() {}
 
-signed main()
-{
-    if (fopen(NAME ".INP", "r"))
-    {
-        freopen(NAME ".INP", "r", stdin);
-        freopen(NAME ".OUT", "w", stdout);
-    }
+signed main() {
+  if (fopen(NAME ".INP", "r")) {
+    freopen(NAME ".INP", "r", stdin);
+    freopen(NAME ".OUT", "w", stdout);
+  }
 
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout.tie(nullptr);
 
-    int tt = 1;
-    // cin >> tt;
+  int tt = 1;
+  // cin >> tt;
 
-    while (tt--)
-        solve();
-    return 0;
+  while (tt--)
+    solve();
+  return 0;
 }

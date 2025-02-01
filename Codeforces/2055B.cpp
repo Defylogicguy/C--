@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:17:44 - 12/01/2025
+  21:32:19 - 12/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,25 +12,51 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "SEGCOVER2"
+#define NAME "2055B"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> a(n);
+
+    vector<int> a(n), b(n);
+    for (int i = 0; i < n; ++i)
+        cin >> a[i];
+    for (int i = 0; i < n; ++i)
+        cin >> b[i];
+
+    int idk = 0;
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    sort(all(a), [](pair<int, int> a, pair<int, int> b)
-         { return a.second == b.second ? a.first < b.first : a.second < b.second; });
-    int cur = -(1e9 + 7), cnt = 0;
+        idk += (b[i] > a[i]);
+    if (idk >= 2)
+    {
+        cout << "NO\n";
+        return;
+    }
+    else if (idk == 0)
+    {
+        cout << "YES\n";
+        return;
+    }
+
     for (int i = 0; i < n; i++)
-        if (cur <= a[i].first)
+        if (a[i] == b[i])
         {
-            cnt++;
-            cur = a[i].second;
+            cout << "NO\n";
+            return;
         }
-    cout << n - cnt << endl;
+    idk = LLONG_MAX;
+    int idk1 = 0;
+    for (int i = 0; i < n; i++)
+        if (a[i] < b[i])
+            idk1 = max(idk1, b[i] - a[i]);
+        else
+            idk = min(idk, a[i] - b[i]);
+
+    if (idk >= idk1)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 signed main()
@@ -46,7 +72,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();

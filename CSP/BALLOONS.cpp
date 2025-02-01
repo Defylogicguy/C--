@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:17:44 - 12/01/2025
+  23:25:38 - 23/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,25 +12,33 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "SEGCOVER2"
+#define NAME "BALLOONS"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> a(n);
+    stack<pair<float, float>> st;
+
+    cout << fixed << setprecision(3);
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    sort(all(a), [](pair<int, int> a, pair<int, int> b)
-         { return a.second == b.second ? a.first < b.first : a.second < b.second; });
-    int cur = -(1e9 + 7), cnt = 0;
-    for (int i = 0; i < n; i++)
-        if (cur <= a[i].first)
+    {
+        float x, r;
+        cin >> x >> r;
+        while (st.size())
         {
-            cnt++;
-            cur = a[i].second;
+            float x1, r1;
+            tie(x1, r1) = st.top();
+            r = min(r, (x1 - x) * (x1 - x) / (4 * r1));
+            if (r >= r1)
+                st.pop();
+            else
+                break;
         }
-    cout << n - cnt << endl;
+
+        st.push({x, r});
+        cout << r << '\n';
+    }
 }
 
 signed main()

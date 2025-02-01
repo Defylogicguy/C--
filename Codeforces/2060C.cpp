@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:17:44 - 12/01/2025
+  21:10:57 - 19/01/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,25 +12,28 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "SEGCOVER2"
+#define NAME "2060C"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> a(n);
+    int n, k;
+    cin >> n >> k;
+    vector<int > a(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    sort(all(a), [](pair<int, int> a, pair<int, int> b)
-         { return a.second == b.second ? a.first < b.first : a.second < b.second; });
-    int cur = -(1e9 + 7), cnt = 0;
+        cin >> a[i];
+    map<int, int> mp;
     for (int i = 0; i < n; i++)
-        if (cur <= a[i].first)
-        {
-            cnt++;
-            cur = a[i].second;
-        }
-    cout << n - cnt << endl;
+        mp[a[i]]++;
+    vector<int> dont;
+    for (int i = 1; i <= k; i++)
+        if (mp[i] == 0)
+            dont.pb(i);
+    for (int i : dont)
+        mp[k - i] /= 2;
+    int ans = 0;
+    for (int i = 1; i <= k; i++)
+        ans += min(mp[i], mp[k - i]);
+    cout << ans / 2 << endl;
 }
 
 signed main()
@@ -46,7 +49,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();
