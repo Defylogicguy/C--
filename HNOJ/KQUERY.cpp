@@ -37,7 +37,10 @@ int query(int idx, int l, int r, int ql, int qr, int k)
         return 0;
 
     if (ql <= l and r <= qr)
-        return tree[idx].end() - upper_bound(all(tree[idx]), k);
+    {
+        auto arr = tree[idx];
+        return arr.end() - upper_bound(all(arr), k);
+    }
 
     int mid = (l + r) / 2;
     return query(2 * idx, l, mid, ql, qr, k) + query(2 * idx + 1, mid + 1, r, ql, qr, k);
