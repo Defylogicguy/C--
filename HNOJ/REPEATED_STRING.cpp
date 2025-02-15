@@ -1,7 +1,3 @@
-/*************************
-  Author: Defy logic guy
-  08:01:30 - 11/02/2025
-*************************/
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -12,29 +8,26 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "QUAYSOTK24"
+#define NAME "REPEATED_STRING"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    map<int, int> mp;
-    int _max = 0, ans = 0;
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+
+    int n = s.size();
+    for (int cur = 1; cur <= n; cur++)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
-        if (mp[x] > _max)
+        string ans = s.substr(0, cur);
+        string idk = "";
+        while (idk.size() < n)
+            idk += ans;
+        if (idk.substr(0, n) == s)
         {
-            ans = x;
-            _max = mp[x];
+            cout << ans << '\n';
+            return;
         }
-        else if (mp[x] == _max)
-            ans = min(ans, x);
     }
-    cout << ans << '\n';
 }
 
 signed main()
@@ -56,4 +49,3 @@ signed main()
         solve();
     return 0;
 }
-

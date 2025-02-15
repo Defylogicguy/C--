@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  08:01:30 - 11/02/2025
+  09:09:05 - 15/02/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,29 +12,28 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "QUAYSOTK24"
+#define NAME "DEMXAU"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    map<int, int> mp;
-    int _max = 0, ans = 0;
-    for (int i = 0; i < n; i++)
+    string s;
+    int x;
+    cin >> s >> x;
+    int one = 0;
+    for (int i = 1; i < s.size(); i++)
+        if (s[i - 1] == 'a' and s[i] == 'b')
+            one++;
+    
+    if (x == 1)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
-        if (mp[x] > _max)
-        {
-            ans = x;
-            _max = mp[x];
-        }
-        else if (mp[x] == _max)
-            ans = min(ans, x);
+        cout << one << endl;
+        return;
     }
-    cout << ans << '\n';
+
+    bool idk = false;
+    if (s[0] == 'b' and s[s.size() - 1] == 'a')
+        idk = true;
+    cout << one * x + idk * (x - 1) << endl;
 }
 
 signed main()
@@ -56,4 +55,3 @@ signed main()
         solve();
     return 0;
 }
-
