@@ -15,16 +15,21 @@ void solve()
     string s;
     cin >> s;
 
-    int n = s.size();
-    for (int cur = 1; cur <= n; cur++)
+    string cur = "";
+    for (int i = 0; i < s.size(); i++)
     {
-        string ans = s.substr(0, cur);
-        string idk = "";
-        while (idk.size() < n)
-            idk += ans;
-        if (idk.substr(0, n) == s)
+        cur += s[i];
+        bool flag = true;
+        for (int j = 0; j < s.size(); j += i + 1)
         {
-            cout << ans << '\n';
+            if (s.size() - j < cur.size())
+                flag &= s.substr(j, s.size() - j) == cur.substr(0, s.size() - j);
+            else
+                flag &= s.substr(j, i + 1) == cur;
+        }
+        if (flag)
+        {
+            cout << cur << endl;
             return;
         }
     }

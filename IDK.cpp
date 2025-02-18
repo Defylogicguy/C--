@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  08:01:30 - 11/02/2025
+  09:54:07 - 16/02/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,29 +12,49 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "QUAYSOTK24"
+#define NAME "IDK"
+
+void sub1(int n, int W, const vector<int> &w, const vector<int> &v, const vector<int> &a, const vector<int> &b)
+{
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    for (int i = 1; i <= n; i++)
+        for (int j = 0; j <= W; j++)
+        {
+            dp[i][j] = dp[i - 1][j];
+            for (int u = 0; u <= j / w[i]; u++)
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - u * w[i]] + u * v[i] - a[i] * u * u + b[i] * (u > 0));
+        }
+
+    cout << dp[n][W] << endl;
+}
+
+void sub2(int n, int W, const vector<int> &w, const vector<int> &v, const vector<int> &a, const vector<int> &b)
+{
+    vector<int> dp(W + 1, 0);
+    for (int i = 1; i <= n; i++)
+        for (int j = w[i]; j <= W; j++)
+            dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
+    cout << dp[W] << endl;
+}
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    map<int, int> mp;
-    int _max = 0, ans = 0;
-    for (int i = 0; i < n; i++)
+    int n, W;
+    cin >> n >> W;
+
+    bool flag = true;
+    vector<int> w(n + 1), v(n + 1), a(n + 1), b(n + 1);
+    for (int i = 1; i <= n; i++)
     {
-        int x;
-        cin >> x;
-        mp[x]++;
-        if (mp[x] > _max)
-        {
-            ans = x;
-            _max = mp[x];
-        }
-        else if (mp[x] == _max)
-            ans = min(ans, x);
+        cin >> w[i] >> v[i] >> b[i] >> a[i];
+        if (a[i] != 0 or b[i] != 0)
+            flag = false;
     }
-    cout << ans << '\n';
+
+    if (flag)
+        sub2(n, W, w, v, a, b);
+    else if (n <= 100 and W <= 100)
+        sub1(n, W, w, v, a, b);
 }
 
 signed main()
@@ -56,4 +76,3 @@ signed main()
         solve();
     return 0;
 }
-
