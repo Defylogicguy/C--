@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  22:44:38 - 15/02/2025
+  19:48:10 - 18/02/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,31 +12,35 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "D642"
+#define NAME "B463"
 
-int cubeRoot(int n)
-{
-    if (n == 0)
-        return 0;
-
-    int l = 0, r = 1e6 + 1;
-    int ans = 0;
-    while (l <= r)
-    {
-        int mid = l + (r - l) / 2;
-        if (mid > )
-        if (mid * mid * mid <= n)
-        {
-            ans = mid;
-            r = mid - 1;
-        }
-        else
-            l = mid + 1;
-    }
-}
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    int x, y;
+    cin >> y >> x;
+    x--, y--;
+    vector<vector<char>> a(n, vector<char>(m));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> a[i][j];
 
+    string s;
+    cin >> s;
+    for (char c : s)
+    {
+        if (c == 'L' && y - 1 >= 0 && a[x][y - 1] == '.')
+            y--;
+        if (c == 'R' && y + 1 < m && a[x][y + 1] == '.')
+            y++;
+        if (c == 'U' && x - 1 >= 0 && a[x - 1][y] == '.')
+            x--;
+        if (c == 'D' && x + 1 < n && a[x + 1][y] == '.')
+            x++;
+    }
+
+    cout << x + 1 << ' ' << y + 1;
 }
 
 signed main()

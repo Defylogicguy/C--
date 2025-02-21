@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  22:44:38 - 15/02/2025
+  19:45:38 - 18/02/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,31 +12,26 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "D642"
+#define NAME "A563"
 
-int cubeRoot(int n)
-{
-    if (n == 0)
-        return 0;
-
-    int l = 0, r = 1e6 + 1;
-    int ans = 0;
-    while (l <= r)
-    {
-        int mid = l + (r - l) / 2;
-        if (mid > )
-        if (mid * mid * mid <= n)
-        {
-            ans = mid;
-            r = mid - 1;
-        }
-        else
-            l = mid + 1;
-    }
-}
 void solve()
 {
-
+    int n;
+    cin >> n;
+    if (n % 4)
+        cout << 365;
+    else
+    {
+        if (n % 100)
+            cout << 366;
+        else
+        {
+            if (n % 400)
+                cout << 365;
+            else
+                cout << 366;
+        }
+    }
 }
 
 signed main()
