@@ -1,0 +1,1 @@
+{"name":"Local: MOVE","url":"c:\\Users\\ngtua\\OneDrive\\Documents\\C--\\CSP\\MOVE.cpp","tests":[{"id":1740214895281,"input":"3 6\n101010\n000100\n100000","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ngtua\\OneDrive\\Documents\\C--\\CSP\\MOVE.cpp","group":"local","local":true}
