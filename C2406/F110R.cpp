@@ -1,0 +1,61 @@
+/*************************
+  Author: Defy logic guy
+  20:38:40 - 25/02/2025
+*************************/
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define float long double
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define heap priority_queue
+#define pb push_back
+#define MOD 1000000007
+#define endl '\n'
+#define NAME "F110R"
+
+void solve()
+{
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a;
+    for (int i = 0; i < n; i++)
+    {
+        int x, l;
+        cin >> x >> l;
+        a.pb({x + l, x - l});
+    }
+
+    sort(all(a));
+    int cnt = 0;
+    int lst = -1e18;
+    for (auto it: a)
+    {
+        if (it.second >= lst)
+        {
+            cnt++;
+            lst = it.first;
+        }
+    }
+    cout << cnt << endl;
+}
+
+signed main()
+{
+    if (fopen(NAME ".INP", "r"))
+    {
+        freopen(NAME ".INP", "r", stdin);
+        freopen(NAME ".OUT", "w", stdout);
+    }
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int tt = 1;
+    // cin >> tt;
+
+    while (tt--)
+        solve();
+    return 0;
+}
