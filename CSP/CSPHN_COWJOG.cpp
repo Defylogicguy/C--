@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  16:03:24 - 01/03/2025
+  14:21:48 - 08/03/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,39 +12,25 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "CSPHN_RAIL"
-
-bool f(int mid, vector<int> a)
-{
-    int cnt = 1;
-    int cur = 0;
-    for (int i = 0; i < a.size(); i++)
-    {
-        if 
-    }
-}
+#define NAME "CSPHN_COWJOG"
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
+
     vector<int> a(n);
+    int x;
     for (int i = 0; i < n; i++)
-        cin >> a[i];
-    
-    int l = *max_element(all(a)), r = accumulate(all(a), 0ll);
-    int ans = 0;
-    while (l <= r)
-    {
-        int mid = l + (r - l) / 2;
-        if (f(mid, a))
+        cin >> a[i] >> a[i];
+
+    int lst = a[n - 1], ans = 1;
+    for (int i = n - 2; i >= 0; i--)
+        if (a[i] <= lst)
         {
-            ans = mid;
-            r = mid - 1;
+            lst = a[i];
+            ans++;
         }
-        else
-            l = mid + 1;
-    }
     cout << ans << endl;
 }
 
@@ -67,4 +53,3 @@ signed main()
         solve();
     return 0;
 }
-    

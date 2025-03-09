@@ -1,1 +1,0 @@
-{"name":"Local: STARTUP","url":"c:\\Users\\ngtua\\OneDrive\\Documents\\C--\\csp\\STARTUP.cpp","tests":[{"id":1740215797530,"input":"4\n3 6\n1 2\n0 5\n3 7\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ngtua\\OneDrive\\Documents\\C--\\csp\\STARTUP.cpp","group":"local","local":true}
