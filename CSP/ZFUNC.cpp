@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  22:07:53 - 28/02/2025
+  15:36:46 - 15/03/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,10 +12,26 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "HASHBIN"
+#define NAME "ZFUNC"
+
+vector<int> zf(string s)
+{
+    int n = s.size();
+    vector<int> z(n);
+    for (int i = 1; i < n; i++)
+        while (i + z[i] < n && s[i + z[i]] == s[z[i]])
+            z[i]++;
+    return z;
+}
 
 void solve()
 {
+    string s;
+    cin >> s;
+    vector<int> z = zf(s);
+    cout << s.size() << ' ';
+    for (int i = 1; i < z.size(); i++)
+        cout << z[i] << ' ';
 }
 
 signed main()
