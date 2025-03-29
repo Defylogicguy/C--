@@ -12,6 +12,8 @@
 			"#define float long double",
 			"#define all(x) x.begin(), x.end()",
 			"#define rall(x) x.rbegin(), x.rend()",
+			"#define maxall(x) *max_element(all(x))",
+			"#define minall(x) *min_element(all(x))",
 			"#define heap priority_queue",
 			"#define pb push_back",
 			"#define MOD 1000000007",
