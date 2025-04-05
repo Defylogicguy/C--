@@ -1,7 +1,3 @@
-/*************************
-  Author: Defy logic guy
-  15:45:20 - 29/03/2025
-*************************/
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -16,25 +12,92 @@ using namespace std;
 #define endl '\n'
 #define NAME "SIMILAR"
 
+struct State
+{
+    int len, link;
+    map<int, int> next;
+};
+
+void extend(int c, vector<State> &states, int &size, int &last)
+{
+    int p = last;
+    int curr = size++;
+    states.emplace_back();
+    states[curr].len = states[p].len + 1;
+    while (p != -1 && !states[p].next.count(c))
+    {
+        states[p].next[c] = curr;
+        p = states[p].link;
+    }
+    if (p == -1)
+    {
+        states[curr].link = 0;
+    }
+    else
+    {
+        int q = states[p].next[c];
+        if (states[p].len + 1 == states[q].len)
+        {
+            states[curr].link = q;
+        }
+        else
+        {
+            int clone = size++;
+            states.emplace_back();
+            states[clone].len = states[p].len + 1;
+            states[clone].next = states[q].next;
+            states[clone].link = states[q].link;
+            while (p != -1 && states[p].next[c] == q)
+            {
+                states[p].next[c] = clone;
+                p = states[p].link;
+            }
+            states[q].link = clone;
+            states[curr].link = clone;
+        }
+    }
+    last = curr;
+}
+
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i)
+    {
         cin >> a[i];
+    }
+    if (n == 1)
+    {
+        cout << 0 << endl;
+        return;
+    }
 
-    int ans = 1;
-    for (int i = 1; i <= n; i++)
-        for (int j = i + 1; i <= n; j++)
-            for (int k = 1; k <= n - j; k++)
-            {
-                if ((a[j + k] - a[i + k] )== (a[j] - a[i]))
-                    ans = max(ans, k + 1);
-                else
-                    break;
-            }
-    cout << ans << '\n';
+    vector<int> diff(n - 1);
+    for (int i = 0; i < n - 1; ++i)
+    {
+        diff[i] = a[i + 1] - a[i];
+    }
+
+    vector<State> states;
+    states.emplace_back();
+    states[0].len = 0;
+    states[0].link = -1;
+    int size = 1, last = 0;
+
+    for (int c : diff)
+    {
+        extend(c, states, size, last);
+    }
+
+    int max_len = 0;
+    for (int i = 1; i < size; ++i)
+    {
+        max_len = max(max_len, states[i].len);
+    }
+
+    cout << (max_len ? max_len + 1 : 0) << endl;
 }
 
 signed main()
@@ -53,6 +116,8 @@ signed main()
     cin >> tt;
 
     while (tt--)
+    {
         solve();
+    }
     return 0;
 }
