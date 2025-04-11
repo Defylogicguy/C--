@@ -16,9 +16,46 @@ using namespace std;
 #define endl '\n'
 #define NAME "SGRAPH"
 
+struct node
+{
+    int idx, v, w;
+};
+
+struct cmp
+{
+    bool operator()(const node &a, const node &b)
+    {
+        return a.w > b.w;
+    }
+};
+
+void dijkstra(int st, vector<vector<pair<int, int>>> &adj, vector<int> &d)
+{
+    d[st] = 0;
+    heap<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, st});
+
+    while (pq.size())
+    {
+        int k = pq.top().first;
+        int u = pq.top().second;
+        pq.pop();
+
+        if (d[u] < k)
+            continue;
+
+        for (auto [v, w] : adj[u])
+            if (d[u] + w < d[v])
+            {
+                d[v] = d[u] + w;
+                pq.push({d[v], v});
+            }
+    }
+}
+
 void solve()
 {
-    int n , m;
+    int n, m;
     cin >> n >> m;
     vector<vector<pair<int, int>>> adj(n + 1), radj(n + 1);
     while (m--)
@@ -29,8 +66,14 @@ void solve()
         radj[v].pb({u, w});
     }
 
-    vector<int> d(n + 1, LLONG_MAX), rd(n + 1, LLONG_MAX);
-    
+    vector<int> d(n + 1, LLONG_MAX);
+    dijkstra(1, adj, d);
+
+    vector<int> rd(n + 1, LLONG_MAX);
+    dijkstra(1, radj, rd);
+
+    for (int i = 2; i <= n; i++)
+        cout << (d[i] == LLONG_MAX or rd[i] == LLONG_MAX ? -1 : d[i] + rd[i]) << endl;
 }
 
 signed main()
