@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  16:04:12 - 12/04/2025
+  16:27:36 - 12/04/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,45 +14,42 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "CSPHN_EXPEDI"
+#define NAME "CSPHN_YOGHURT2"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> a(n);
+    vector<int> a(n), b(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i].first >> a[i].second;
-    int l, p;
-    cin >> l >> p;
-    l -= p;
-    sort(rall(a));
-    a.insert(a.begin(), {0, 0});
-    heap<int> pq;
-    int ans = 0, j = 1;
-    for (int i = 1; i <= n + 1; i++)
+        cin >> a[i];
+    for (int i = 0; i < n; i++)
+        cin >> b[i];
+    int cur = 0;
+    heap<pair<int,int>> pq;
+    for (int i = 0; i < n; i++)
     {
-        if (a[i].first == a[i - 1].first)
-            continue;
-        while (l > a[i].first)
+        cur += a[i];
+        if (cur >= b[i])
         {
-            while (j <= i and  l <= a[j].first)
-            {
-                pq.push(a[j].second);
-                j++;
-            }
-            if (pq.empty())
-            {
-                cout << -1;
-                return;
-            }
-
-            ans++;
-            l -= pq.top();
+            cur -= b[i];
+            pq.push({b[i], i});
+        }
+        else if (pq.size() and b[i] <= pq.top().first)
+        {
+            cur -= b[i];
+            cur += pq.top().first;
             pq.pop();
+            pq.push({b[i], i});
         }
     }
-    cout << ans;
+    cout << pq.size() << '\n';
+    vector<int> ans;
+    while (pq.size())
+        ans.pb(pq.top().second + 1), pq.pop();
+    sort(all(ans));
+    for (int i : ans)
+        cout << i << ' ';
 }
 
 signed main()
