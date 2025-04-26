@@ -52,7 +52,7 @@ void solve()
         }
     }
 
-    vector<int> sz(n + 1);
+    vector<int> sz(n + 1, 1);
     int cnt = 0;
     for (int i = n - 1; i > 0; i--)
     {
