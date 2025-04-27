@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  07:44:40 - 27/04/2025
+  13:52:02 - 27/04/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,11 +14,11 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "IDK"
+#define NAME "tht"
 
-void solve(){
-    double idk = -0.9993233606;
-    cout << fixed << setprecision(10) << idk * idk * idk + 3 * idk * idk + 3 * idk + 1 << '\n' << 1e-9;
+void solve()
+{
+    
 }
 
 signed main()
