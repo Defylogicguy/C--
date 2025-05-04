@@ -20,28 +20,32 @@ void solve()
 {
     int n;
     cin >> n;
+
     vector<int> ps;
     vector<bool> p(55555, true);
     p[0] = p[1] = false;
-    for (int i = 2; i * i <= n; ++i)
+
+    for (int i = 2; i < p.size(); i++)
         if (p[i])
         {
             ps.pb(i);
-            for (int j = i * i; j <= n; j += i)
+            for (int j = i * 2; j < p.size(); j += i)
                 p[j] = false;
         }
-    shuffle(all(ps), default_random_engine(time(0)));
-    bool flag = false;
-    vector<int> res;
-    auto isComp = [&](int x) -> bool
+
+    auto isPrime = [&](int x) -> bool
     {
-        if (x <= 55555)
+        if (x < p.size())
             return p[x];
         for (int i = 2; i * i <= x; i++)
             if (x % i == 0)
                 return false;
         return x > 1;
     };
+
+    bool flag = false;
+    vector<int> res;
+
     for (int i = 0; i < ps.size() and !flag; i++)
         for (int j = i + 1; j < ps.size() and !flag; j++)
             for (int k = j + 1; k < ps.size() and !flag; k++)
@@ -49,9 +53,8 @@ void solve()
                     for (int m = l + 1; m < ps.size() and !flag; m++)
                     {
                         int sum = ps[i] + ps[j] + ps[k] + ps[l] + ps[m];
-                        if (isComp(sum))
+                        if (!isPrime(sum))
                         {
-                            flag = true;
                             res = {ps[i], ps[j], ps[k], ps[l], ps[m]};
                             flag = true;
                         }
@@ -61,21 +64,27 @@ void solve()
     {
         if (res.size() == n)
             break;
+
         if (find(all(res), x) != res.end())
             continue;
+
         flag = true;
-        for (int a = 0; a < 5 and flag; a++)
-            for (int b = a + 1; b < 5 and flag; b++)
-                for (int c = b + 1; c < 5 and flag; c++)
-                    for (int d = c + 1; d < 5 and flag; d++)
-                        {
-                            int sum= x + res[a] + res[b] + res[c] + res[d];
-                            if (!isComp(sum))
-                                flag = false;
-                        }
+        int sz = res.size();
+
+        for (int a = 0; a < sz and flag; a++)
+            for (int b = a + 1; b < sz and flag; b++)
+                for (int c = b + 1; c < sz and flag; c++)
+                    for (int d = c + 1; d < sz and flag; d++)
+                    {
+                        int sum = res[a] + res[b] + res[c] + res[d] + x;
+                        if (isPrime(sum))
+                            flag = false;
+                    }
+
         if (flag)
             res.pb(x);
     }
+
     for (int i : res)
         cout << i << ' ';
 }
@@ -97,5 +106,6 @@ signed main()
 
     while (tt--)
         solve();
+
     return 0;
 }

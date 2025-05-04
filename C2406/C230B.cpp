@@ -1,11 +1,11 @@
 /*************************
   Author: Defy logic guy
-  07:44:40 - 27/04/2025
+  22:11:21 - 04/05/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-#define float long double
+#define float double
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define maxall(x) *max_element(all(x))
@@ -14,11 +14,25 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "IDK"
+#define NAME "C230B"
 
-void solve(){
-    double idk = -0.9993233606;
-    cout << fixed << setprecision(10) << idk * idk * idk + 3 * idk * idk + 3 * idk + 1 << '\n' << 1e-9;
+vector<bool> p(1e6 + 1, true);
+
+void sieve()
+{
+    p[0] = p[1] = false;
+    for (int i = 2; i * i <= 1e6; ++i)
+        if (p[i])
+            for (int j = i * i; j <= 1e6; j += i)
+                p[j] = false;
+}
+
+void solve()
+{
+    int n;
+    cin >> n;
+    int s = sqrt(n);
+    cout << (s * s == n && p[s] ? "YES\n" : "NO\n");
 }
 
 signed main()
@@ -34,8 +48,9 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
-
+    cin >> tt;
+    
+    sieve();
     while (tt--)
         solve();
     return 0;
