@@ -30,7 +30,7 @@ void init(int idx, int l, int r)
     tree[idx] = max(tree[2 * idx], tree[2 * idx + 1]);
 }
 
-void update(int idx, int l, int r, int ql, int qr, int val)
+void upd(int idx, int l, int r, int ql, int qr, int val)
 {
     if (lazy[idx])
     {
@@ -57,8 +57,8 @@ void update(int idx, int l, int r, int ql, int qr, int val)
     }
 
     int mid = (l + r) / 2;
-    update(2 * idx, l, mid, ql, qr, val);
-    update(2 * idx + 1, mid + 1, r, ql, qr, val);
+    upd(2 * idx, l, mid, ql, qr, val);
+    upd(2 * idx + 1, mid + 1, r, ql, qr, val);
     tree[idx] = max(tree[2 * idx], tree[2 * idx + 1]);
 }
 
@@ -91,7 +91,7 @@ void solve()
 
     for (int i = 0; i < n; i++)
         cin >> a[i];
-    
+
     init(1, 0, n - 1);
 
     int q;
@@ -104,7 +104,7 @@ void solve()
         {
             int l, r, x;
             cin >> l >> r >> x;
-            update(1, 0, n - 1, l - 1, r - 1, x);
+            upd(1, 0, n - 1, l - 1, r - 1, x);
         }
         else
         {
@@ -134,4 +134,3 @@ signed main()
         solve();
     return 0;
 }
-

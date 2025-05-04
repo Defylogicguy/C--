@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  13:52:02 - 27/04/2025
+  14:41:42 - 03/05/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,11 +14,19 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "tht"
+#define NAME "A342"
 
 void solve()
 {
-    
+    int v, a, b, c;
+    cin >> v >> a >> b >> c;
+    v %= (a + b + c);
+    if (v < a)
+        cout << "F\n";
+    else if (v < a + b)
+        cout << "M\n";
+    else
+        cout << "T\n";
 }
 
 signed main()

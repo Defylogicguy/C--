@@ -90,7 +90,9 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "generator": "cpp",
+        "text_encoding": "cpp"
     },
     "discord.enabled": true,
     "python.testing.unittestArgs": [

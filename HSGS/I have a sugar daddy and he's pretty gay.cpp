@@ -28,7 +28,7 @@ void init(int idx, int l, int r)
     tree[idx] = max(tree[2 * idx], tree[2 * idx + 1]);
 }
 
-void update(int idx, int l, int r, int ql, int qr, int val)
+void upd(int idx, int l, int r, int ql, int qr, int val)
 {
     if (l > qr || r < ql)
         return;
@@ -38,8 +38,8 @@ void update(int idx, int l, int r, int ql, int qr, int val)
         return;
     }
     int mid = (l + r) / 2;
-    update(2 * idx, l, mid, ql, qr, val);
-    update(2 * idx + 1, mid + 1, r, ql, qr, val);
+    upd(2 * idx, l, mid, ql, qr, val);
+    upd(2 * idx + 1, mid + 1, r, ql, qr, val);
     tree[idx] = max(tree[2 * idx], tree[2 * idx + 1]);
 }
 
@@ -64,7 +64,7 @@ void solve()
     {
         int u, v, k;
         cin >> u >> v >> k;
-        update(1, 0, n - 1, u - 1, v - 1, k);
+        upd(1, 0, n - 1, u - 1, v - 1, k);
     }
 
     int q;
