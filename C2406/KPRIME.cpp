@@ -18,6 +18,9 @@ using namespace std;
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    
 }
 
 signed main()
