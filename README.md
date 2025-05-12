@@ -20,7 +20,7 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 ## 🔗 My Competitive Programming Profiles
 
-- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1501**
+- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1609**
 - 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1788**
 - 🧩 Other platforms: See individual folders for problems and submissions
 
@@ -30,7 +30,7 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 I’m on a mission to:
 
-- 📈 Reach $${\color{blue}Expert}$$ on Codeforces  
+- 📈 Reach $${\color{purple}Candidate   Master}$$ on Codeforces  
 - ⭐ Achieve **$${\color{yellow}5★}$$** on CodeChef  
 - 🧠 Keep improving by solving diverse problems across multiple OJs
 
