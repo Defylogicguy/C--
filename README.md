@@ -30,7 +30,7 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 I’m on a mission to:
 
-- 📈 Reach $${\color{purple}Candidate   Master}$$ on Codeforces  
+- 📈 Reach **$${\color{purple}Candidate}$$ $${\color{purple}Master}$$** on Codeforces  
 - ⭐ Achieve **$${\color{yellow}5★}$$** on CodeChef  
 - 🧠 Keep improving by solving diverse problems across multiple OJs
 
