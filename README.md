@@ -12,7 +12,7 @@ This repository contains code solutions (and some WIPs) from a variety of **Onli
 - **[CSP by VNOI](https://csp.vnoi.info/)**
 - **[HNOJ (Hanoi Online Judge)](https://hnoj.edu.vn/)**
 - **[Atcoder](https://atcoder.jp/)**
-- **[Kids Who Code](https://kidswhocode.tech/)**
+- **[Kids Who Code (C2406)](https://kidswhocode.tech/)**
 
 The code ranges from polished and optimized to experimental and exploratory.
 
