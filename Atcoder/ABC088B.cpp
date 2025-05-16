@@ -22,7 +22,7 @@ void solve()
     cin >> n;
     vector<int> a(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i];
+        cin >> a[i];    
     sort(rall(a));
     int one = 0, two = 0;
     for (int i = 0; i < n; i += 2)
