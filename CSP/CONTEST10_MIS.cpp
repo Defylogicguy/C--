@@ -69,9 +69,9 @@ void solve()
         int idx = mp[a[i]];
         int res = 0;
         if (idx > 0)
-            res = query(1, 0, b.size() - 1, 0, idx - 1);
+            res = query(0, 0, b.size() - 1, 0, idx - 1);
         int cur = res + l[i];
-        upd(1, 0, b.size() - 1, idx, cur);
+        upd(0, 0, b.size() - 1, idx, cur);
         ans = max(ans, cur);
     }
     cout << ans << endl;
