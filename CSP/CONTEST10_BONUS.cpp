@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  15:43:27 - 02/06/2025
+  22:24:02 - 02/06/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,31 +20,66 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n), c(n);
-    for (int i = 0; i < n; i++)
+    vector<int> a(n + 1), c(n + 1);
+    for (int i = 1; i <= n; i++)
         cin >> a[i];
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
         cin >> c[i];
-    vector<vector<int>> dp(n + 1, vector<int>(n + 1, LLONG_MIN));
-    dp[0][0] = 0;
-    for (int j = 0; j <= n; j++)
+
+    vector<vector<pair<int, int>>> res(n + 1), tmp(n + 1);
+    res[0].pb({0, 0});
+
+    for (int i = 1; i <= n; i++)
     {
-        int sum = 0;
-        for (int i = 1; i <= n; i++)
+        for (int j = 0; j <= n; j++)
+            tmp[j].clear();
+
+        for (int j = 0; j <= n; j++)
         {
-            sum += a[i - 1];
-            dp[i][j] = max(dp[i][j], dp[i - 1][j - 1]);
-            if (j > c[i - 1])
+            auto &v = res[j];
+            if (v.empty())
+                continue;
+
+            for (auto &k : v)
             {
-                dp[i][j] = max(dp[i][j], dp[i - 1][j - c[i - 1]] + sum);
-                sum = 0;
+                if (j <= n)
+                    tmp[j].pb({k.first, k.second + a[i]});
+                if (j + 1 <= n)
+                    tmp[j + 1].pb({k.first, 0});
+                if (j >= c[i])
+                    tmp[j - c[i]].pb({k.first + k.second + a[i], 0});
             }
         }
+
+        for (int j = 0; j <= n; j++)
+        {
+            auto &w = tmp[j];
+            if (w.empty())
+                continue;
+
+            sort(all(w), [](auto &a, auto &b)
+                 { return a.first != b.first ? a.first > b.first : a.second > b.second; });
+
+            vector<pair<int, int>> idk;
+            int mx = LLONG_MIN;
+            for (auto &p : w)
+                if (p.second > mx)
+                {
+                    idk.pb(p);
+                    mx = p.second;
+                }
+            w.swap(idk);
+        }
+
+        res.swap(tmp);
     }
-    int ans = LLONG_MIN;
-    for (int i = 0; i <= n; i++)
-        ans = max(ans, dp[n][i]);
-    cout << ans << endl;
+
+    int ans = 0;
+    for (int j = 0; j <= n; j++)
+        for (auto &p : res[j])
+            ans = max(ans, p.first);
+
+    cout << ans;
 }
 
 signed main()
