@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  08:24:40 - 02/06/2025
+  15:43:27 - 02/06/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,55 +14,37 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "MAXPATH"
-
-vector<vector<int>> adj;
-vector<int> a;
-int max_sum = LLONG_MIN;
-
-int dfs(int u, int p, int &res)
-{
-    int one = 0, two = 0;
-
-    for (int v : adj[u])
-    {
-        if (v == p)
-            continue;
-        int val = dfs(v, u, res);
-        if (val > one)
-        {
-            two = one;
-            one = val;
-        }
-        else if (val > two)
-            two = val;
-    }
-
-    res = max(res, a[u] + one + two);
-    return max(0LL, a[u] + one);
-}
+#define NAME "CONTEST10_BONUS"
 
 void solve()
 {
     int n;
     cin >> n;
-    a.resize(n + 1);
-    adj.resize(n + 1);
-
-    for (int i = 1; i <= n; i++)
+    vector<int> a(n), c(n);
+    for (int i = 0; i < n; i++)
         cin >> a[i];
-
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < n; i++)
+        cin >> c[i];
+    vector<vector<int>> dp(n + 1, vector<int>(n + 1, LLONG_MIN));
+    dp[0][0] = 0;
+    for (int j = 0; j <= n; j++)
     {
-        int u, v;
-        cin >> u >> v;
-        adj[u].pb(v);
-        adj[v].pb(u);
+        int sum = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            sum += a[i - 1];
+            dp[i][j] = max(dp[i][j], dp[i - 1][j - 1]);
+            if (j > c[i - 1])
+            {
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - c[i - 1]] + sum);
+                sum = 0;
+            }
+        }
     }
-
-    int res = LLONG_MIN;
-    dfs(1, 0, res);
-    cout << res << endl;
+    int ans = LLONG_MIN;
+    for (int i = 0; i <= n; i++)
+        ans = max(ans, dp[n][i]);
+    cout << ans << endl;
 }
 
 signed main()

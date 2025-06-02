@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  08:24:40 - 02/06/2025
+  08:41:14 - 02/06/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,55 +14,40 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "MAXPATH"
+#define NAME "SUBGRAPH"
 
-vector<vector<int>> adj;
-vector<int> a;
-int max_sum = LLONG_MIN;
+vector<int> dp;
+int ans = 0, n;
 
-int dfs(int u, int p, int &res)
+int dfs(int u, int p, vector<vector<int>> &adj)
 {
-    int one = 0, two = 0;
-
+    dp[u] = 1;
     for (int v : adj[u])
     {
         if (v == p)
             continue;
-        int val = dfs(v, u, res);
-        if (val > one)
-        {
-            two = one;
-            one = val;
-        }
-        else if (val > two)
-            two = val;
+        int sz = dfs(v, u, adj);
+        ans = (ans + sz * (n - sz)) % MOD;
+        dp[u] += sz;
     }
-
-    res = max(res, a[u] + one + two);
-    return max(0LL, a[u] + one);
+    return dp[u];
 }
 
 void solve()
 {
-    int n;
     cin >> n;
-    a.resize(n + 1);
-    adj.resize(n + 1);
-
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-
-    for (int i = 0; i < n - 1; i++)
+    vector<vector<int>> adj(n + 1);
+    for (int i = 1; i < n; i++)
     {
         int u, v;
         cin >> u >> v;
         adj[u].pb(v);
         adj[v].pb(u);
     }
-
-    int res = LLONG_MIN;
-    dfs(1, 0, res);
-    cout << res << endl;
+    dp.assign(n + 1, 0);
+    ans = 0;
+    dfs(1, -1, adj);
+    cout << (ans + n) % MOD << endl;
 }
 
 signed main()

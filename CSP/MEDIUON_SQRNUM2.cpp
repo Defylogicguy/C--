@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  08:24:40 - 02/06/2025
+  14:14:14 - 02/06/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,55 +14,44 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "MAXPATH"
-
-vector<vector<int>> adj;
-vector<int> a;
-int max_sum = LLONG_MIN;
-
-int dfs(int u, int p, int &res)
-{
-    int one = 0, two = 0;
-
-    for (int v : adj[u])
-    {
-        if (v == p)
-            continue;
-        int val = dfs(v, u, res);
-        if (val > one)
-        {
-            two = one;
-            one = val;
-        }
-        else if (val > two)
-            two = val;
-    }
-
-    res = max(res, a[u] + one + two);
-    return max(0LL, a[u] + one);
-}
+#define NAME "MEDIUON_SQRNUM2"
 
 void solve()
 {
     int n;
     cin >> n;
-    a.resize(n + 1);
-    adj.resize(n + 1);
 
+    vector<int> spf(n + 1);
+    for (int i = 2; i <= n; i++)
+        if (spf[i] == 0)
+            for (int j = i; j <= n; j += i)
+                if (spf[j] == 0)
+                    spf[j] = i;
+
+    vector<int> num(n + 1, 0);
     for (int i = 1; i <= n; i++)
-        cin >> a[i];
-
-    for (int i = 0; i < n - 1; i++)
     {
-        int u, v;
-        cin >> u >> v;
-        adj[u].pb(v);
-        adj[v].pb(u);
+        int x = i, idk = 1;
+        while (x > 1)
+        {
+            int p = spf[x];
+            int cnt = 0;
+            while (x % p == 0)
+            {
+                x /= p;
+                cnt++;
+            }
+            if (cnt % 2 == 1)
+                idk *= p;
+        }
+        num[idk]++;
     }
 
-    int res = LLONG_MIN;
-    dfs(1, 0, res);
-    cout << res << endl;
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+        ans += num[i] * num[i];
+
+    cout << ans;
 }
 
 signed main()
