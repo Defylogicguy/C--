@@ -20,7 +20,7 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 ## 🔗 My Competitive Programming Profiles
 
-- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1609**
+- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1613**
 - 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1788**
 - 🧩 Other platforms: See individual folders for problems and submissions
 
