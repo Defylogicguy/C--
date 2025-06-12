@@ -17,7 +17,6 @@
 			"#define heap priority_queue",
 			"#define pb push_back",
 			"#define MOD 1000000007",
-			"#define endl '\\n'",
 			"#define NAME \"${TM_FILENAME_BASE}\"",
 			"",
 			"void solve()",
