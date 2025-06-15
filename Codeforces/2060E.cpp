@@ -14,12 +14,12 @@ using namespace std;
 #define endl '\n'
 #define NAME "2060E"
 
-const int N = 2e5 + 5;
+const int maxn = 2e5 + 5;
 
-vector<bool> check1(N, false), check2(N, false);
+vector<bool> check1(maxn, false), check2(maxn, false);
 int cnt = 0, cnt2 = 0, n, m1, m2;
-vector<vector<int>> connect1(N), connect2(N);
-vector<int> idk(N);
+vector<vector<int>> connect1(maxn), connect2(maxn);
+vector<int> idk(maxn);
 map<pair<int, int>, int> mp;
 
 void find1(int i)

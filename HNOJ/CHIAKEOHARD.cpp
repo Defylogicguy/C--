@@ -16,8 +16,8 @@ using namespace std;
 #define endl '\n'
 #define NAME "CHIAKEOHARD"
 
-const int N = 2e6 + 5;
-vector<int> f(N), invf(N);
+const int maxn = 2e6 + 5;
+vector<int> f(maxn), invf(maxn);
 
 int power(int a, int b)
 {
@@ -35,7 +35,7 @@ int power(int a, int b)
 void pre()
 {
     f[0] = invf[0] = 1;
-    for (int i = 1; i < N; ++i)
+    for (int i = 1; i < maxn; ++i)
     {
         f[i] = f[i - 1] * i % MOD;
         invf[i] = power(f[i], MOD - 2);

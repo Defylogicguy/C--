@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  23:00:39 - 19/05/2025
+  14:11:04 - 12/06/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,49 +13,34 @@ using namespace std;
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define endl '\n'
-#define NAME "CHIAKEOEASY"
-
-const int maxn = 2e6 + 5;
-vector<int> f(maxn), invf(maxn);
-
-int power(int a, int b)
-{
-    int res = 1;
-    while (b)
-    {
-        if (b & 1)
-            res = res * a % MOD;
-        a = a * a % MOD;
-        b >>= 1;
-    }
-    return res;
-}
-
-void pre()
-{
-    f[0] = invf[0] = 1;
-    for (int i = 1; i < maxn; ++i)
-    {
-        f[i] = f[i - 1] * i % MOD;
-        invf[i] = power(f[i], MOD - 2);
-    }
-}
-
-int Cnk(int n, int k)
-{
-    if (k < 0 || k > n)
-        return 0;
-    return f[n] * invf[k] % MOD * invf[n - k] % MOD;
-}
+#define NAME "THE HIGH PRIESTESS"
 
 void solve()
 {
-    pre();
-    int n, k;
-    cin >> n >> k;
-    cout << Cnk(n + k - 1, k - 1) << endl;
+    auto query = [](int x) -> int
+    {
+        cout << "- " << x << endl;
+        cout.flush();
+        int a;
+        cin >> a;
+        return a;
+    };
+
+    int cnt;
+    cin >> cnt;
+    int prv = 0, n = 0;
+    while (n)
+    {
+        n++;
+        int idk = query(n + 1);
+        n += (1 << (idk - cnt + 1)) - 1;
+        prv = (1 << (idk - cnt + 1)) - 1;
+        cnt -= 1;
+    }
+    cout << "! " << n << endl;
+    cout.flush();
 }
+
 
 signed main()
 {
@@ -70,9 +55,9 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
+
     while (tt--)
         solve();
-
     return 0;
 }

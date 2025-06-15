@@ -16,7 +16,7 @@ using namespace std;
 #define endl '\n'
 #define NAME "BEUTYROADS"
 
-const int N = 2e5 + 5;
+const int maxn = 2e5 + 5;
 
 struct edge
 {

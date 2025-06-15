@@ -14,11 +14,11 @@ using namespace std;
 #define endl '\n'
 #define NAME "2056A"
 
-const int N = 1e5 + 5;
-vector<vector<bool>> a(N, vector<bool>(N, false));
+const int maxn = 1e5 + 5;
+vector<vector<bool>> a(maxn, vector<bool>(maxn, false));
 void solve()
 {
-    a.assign(N, vector<bool>(N, false));
+    a.assign(maxn, vector<bool>(maxn, false));
     int n, m;
     cin >> n >> m;
     int x = 0, y = 0;
@@ -33,17 +33,17 @@ void solve()
                 a[i][j] = true;
     }
     int ans = 0;
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < N; j++)
+    for (int i = 0; i < maxn; i++)
+        for (int j = 0; j < maxn; j++)
         {
             int cur = 4;
             if (i > 0 && a[i - 1][j])
                 cur--;
             if (j > 0 && a[i][j - 1])
                 cur--;
-            if (i < N - 1 && a[i + 1][j])
+            if (i < maxn - 1 && a[i + 1][j])
                 cur--;
-            if (j < N - 1 && a[i][j + 1])
+            if (j < maxn - 1 && a[i][j + 1])
                 cur--;
             ans += cur;
         }
@@ -69,4 +69,3 @@ signed main()
         solve();
     return 0;
 }
-
