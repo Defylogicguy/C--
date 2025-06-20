@@ -8,11 +8,12 @@ Welcome to **C--**, a personal archive where I store all the programming problem
 
 This repository contains code solutions (and some WIPs) from a variety of **Online Judges (OJs)**, including:
 
-- **[Codeforces](https://codeforces.com/)**
+- **[Codeforces](https://codeforces.com/)** (I don't upload anymore)
 - **[CSP by VNOI](https://csp.vnoi.info/)**
 - **[HNOJ (Hanoi Online Judge)](https://hnoj.edu.vn/)**
 - **[Atcoder](https://atcoder.jp/)**
 - **[Kids Who Code (C2406)](https://kidswhocode.tech/)**
+- **[Virtual Judge (HSGS)](https://vjudge.net)**
 
 The code ranges from polished and optimized to experimental and exploratory.
 
@@ -20,8 +21,8 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 ## 🔗 My Competitive Programming Profiles
 
-- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1613**
-- 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1788**
+- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1809**
+- 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1864**
 - 🧩 Other platforms: See individual folders for problems and submissions
 
 ---
