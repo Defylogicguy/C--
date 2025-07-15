@@ -21,8 +21,8 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 ## 🔗 My Competitive Programming Profiles
 
-- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1809**
-- 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1864**
+- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1815**
+- 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1849**
 - 🧩 Other platforms: See individual folders for problems and submissions
 
 ---
