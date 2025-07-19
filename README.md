@@ -13,7 +13,7 @@ This repository contains code solutions (and some WIPs) from a variety of **Onli
 - **[HNOJ (Hanoi Online Judge)](https://hnoj.edu.vn/)**
 - **[Atcoder](https://atcoder.jp/)**
 - **[Kids Who Code (C2406)](https://kidswhocode.tech/)**
-- **[Virtual Judge (HSGS)](https://vjudge.net)**
+- **[Virtual Judge (HSGS, KWC)](https://vjudge.net)**
 
 The code ranges from polished and optimized to experimental and exploratory.
 
