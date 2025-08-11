@@ -117,6 +117,13 @@
         "strings": false
     },
     "editor.suggestOnTriggerCharacters": true,
-    "editor.acceptSuggestionOnEnter": "on"
-
+    "editor.acceptSuggestionOnEnter": "on",
+    "files.exclude": {
+        "**/$RECYCLE.BIN": true,
+        "**/System Volume Information": true
+    },
+    "search.exclude": {
+        "**/$RECYCLE.BIN": true,
+        "**/System Volume Information": true
+    }
 }
