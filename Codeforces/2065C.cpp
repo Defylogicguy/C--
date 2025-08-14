@@ -12,7 +12,7 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define endl '\n'
-#define NAME "2065C2"
+#define NAME "2065C"
 
 void solve()
 {
@@ -28,9 +28,9 @@ void solve()
     int cur = LLONG_MIN;
     for (int i = 0; i < n; i++)
     {
-        int one = (a[i]>=cur ?  a[i] : LLONG_MAX);
-        auto  idk = lower_bound(all(b), a[i] + cur);
-        int two = (idk != b.end()  ? (*idk - a[i]) : LLONG_MAX);
+        int one = (a[i] >= cur ? a[i] : LLONG_MAX);
+        auto idk = lower_bound(all(b), a[i] + cur);
+        int two = (idk != b.end() ? (*idk - a[i]) : LLONG_MAX);
         if (one == LLONG_MAX and two == LLONG_MAX)
         {
             cout << "NO\n";
