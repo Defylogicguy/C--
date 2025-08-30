@@ -21,8 +21,9 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 ## 🔗 My Competitive Programming Profiles
 
-- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1815**
+- 🏆 [Codeforces: Defylogicguy](https://codeforces.com/profile/Defylogicguy) — Current Rating: **1858**
 - 🥇 [CodeChef: Defylogicguy](https://www.codechef.com/users/defylogicguy) — Current Rating: **1849**
+- 🏆 [Atcoder: defylogicguy](https://atcoder.jp/users/defylogicguy) — Current Rating: **811**
 - 🧩 Other platforms: See individual folders for problems and submissions
 
 ---
@@ -31,8 +32,9 @@ The code ranges from polished and optimized to experimental and exploratory.
 
 I’m on a mission to:
 
-- 📈 Reach **Candidate Master** on Codeforces  
-- ⭐ Achieve **5★** on CodeChef  
+- Reach **Candidate Master** on Codeforces  
+- Achieve **5★** on CodeChef  
+- Get **2 Kyu** on Atcoder
 - 🧠 Keep improving by solving diverse problems across multiple OJs
 
 This repository helps me track progress, stay motivated, and reflect on my growth as a competitive programmer.
