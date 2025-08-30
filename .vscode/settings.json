@@ -120,7 +120,8 @@
     "editor.acceptSuggestionOnEnter": "on",
     "files.exclude": {
         "**/$RECYCLE.BIN": true,
-        "**/System Volume Information": true
+        "**/System Volume Information": true,
+        "**/Testcases":true,
     },
     "search.exclude": {
         "**/$RECYCLE.BIN": true,
