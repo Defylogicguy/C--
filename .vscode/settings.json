@@ -92,7 +92,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "generator": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "print": "cpp"
     },
     "discord.enabled": true,
     "python.testing.unittestArgs": [
