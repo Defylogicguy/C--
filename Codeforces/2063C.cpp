@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  19:48:59 - 12/09/2025
+  23:40:15 - 16/09/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,61 +23,58 @@ auto operator<<(ostream &os, const T &c) -> decltype(c.begin(), c.end(), os)
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "UBQ"
+#define NAME "2063C"
 
-const int maxn = 2e5 + 5;
-vector<int> v[maxn + 1];
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n + 1);
+    vector<int> deg(n + 1, 0);
+    for (int i = 0; i < n - 1; i++)
     {
-        cin >> a[i];
-        v[a[i]].pb(i);
+        int u, v;
+        cin >> u >> v;
+        adj[u].pb(v), adj[v].pb(u);
+        deg[u]++, deg[v]++;
     }
 
-    vector<vector<int>> mul(maxn + 1);
-    for (int i = 1; i <= maxn; i++)
+    if (n <= 2)
     {
-        for (int j = i; j <= maxn; j += i)
+        cout << 0 << '\n';
+        return;
+    }
+
+    vector<unordered_set<int>> v(n + 1);
+    for (int u = 1; u <= n; u++)
+        for (int j : adj[u])
+            v[u].insert(j);
+
+    vector<int> o(n);
+    iota(all(o), 1);
+    sort(all(o), [&](int a, int b)
+         { return deg[a] > deg[b]; });
+
+    int mx = 0;
+    for (int u = 1; u <= n; u++)
+        for (int j : o)
         {
-            if (v[j].empty())
+            if (j == u)
                 continue;
-            for (int idx : v[j])
-                mul[i].pb(idx);
+            if (v[u].find(j) == v[u].end())
+            {
+                mx = max(mx, deg[u] + deg[j] - 1);
+                break;
+            }
         }
-        if (mul[i].size())
-            sort(all(mul[i]));
-    }
 
-    auto f = [](const vector<int> &v, int l, int r) -> int
-    {
-        if (v.empty())
-            return 0;
-        return upper_bound(all(v), r) - lower_bound(all(v), l);
-    };
+    int mxx = 0;
+    for (int u = 1; u <= n; u++)
+        for (int j : adj[u])
+            if (u < j)
+                mxx = max(mxx, deg[u] + deg[j] - 2);
 
-    while (q--)
-    {
-        int l, r, x;
-        cin >> l >> r >> x;
-        int ans = f(mul[x], l, r);
-        int sx = sqrt(x);
-        for (int d = 1; d <= sx; d++)
-        {
-            if (x % d)
-                continue;
-            int d1 = d;
-            int d2 = x / d;
-            if (d1 <= maxn and d1 != x)
-                ans += f(v[d1], l, r);
-            if (d2 != d1 and d2 <= maxn and d2 != x)
-                ans += f(v[d2], l, r);
-        }
-        cout << ans << '\n';
-    }
+    cout << max(mx, mxx) << "\n";
 }
 
 signed main()
@@ -93,7 +90,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();
