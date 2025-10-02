@@ -89,12 +89,12 @@ void solve()
         int l = qry[i].l, r = qry[i].r, a = qry[i].a, b = qry[i].b, idx = qry[i].idx;
         while (cr < r)
             add(++cr);
+        while (cl < l)
+            del(cl++);
         while (cl > l)
             add(--cl);
         while (cr > r)
             del(cr--);
-        while (cl < l)
-            del(cl++);
         res[idx] = make_pair(f[0].get(b) - f[0].get(a - 1), f[1].get(b) - f[1].get(a - 1));
     }
     for (int i = 0; i < q; i++)
