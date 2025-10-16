@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:24:32 - 11/10/2025
+  14:57:40 - 11/10/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,49 +28,43 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "LMG_DSF"
-
-struct DSU
-{
-    DSU(int n = 0) { init(n); }
-    vector<int> par, sz;
-    void init(int n)
-    {
-        par.resize(n + 1);
-        iota(all(par), 0);
-        sz.assign(n + 1, 1);
-    }
-    int find(int x) { return par[x] = (par[x] == x ? x : find(par[x])); }
-    int size(int x) { return sz[find(x)]; }
-    bool same(int x, int y) { return find(x) == find(y); }
-    void uni(int x, int y)
-    {
-        x = find(x);
-        y = find(y);
-        if (x == y)
-            return;
-        par[y] = x;
-        sz[x] += sz[y];
-    }
-};
+#define NAME "LMH_PEACH"
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    DSU dsu(n + 1);
-    while (m--)
+    int n, a, b;
+    cin >> n >> a >> b;
+    vector<pair<int, int>> v;
+    for (int i = 0; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        if (dsu.find(x) == dsu.find(y))
-            cout << "N\n";
+        int t, k;
+        cin >> t >> k;
+        v.emplace_back(t, k);
+    }
+    sort(all(v));
+    heap<int> pq;
+    int idx = 0, ans = 0, i = a;
+    while (i < b)
+    {
+        while (idx < n and v[idx].first <= i)
+        {
+            pq.push(v[idx].second);
+            idx++;
+        }
+        if (pq.size())
+        {
+            ans += pq.top();
+            pq.pop();
+            i++;
+        }
         else
         {
-            cout << "Y\n";
-            dsu.uni(x, y);
+            if (idx >= n)
+                break;
+            i = max(i, v[idx].first);
         }
     }
+    cout << ans;
 }
 
 signed main()
