@@ -1,6 +1,7 @@
 /*************************
   Author: Defy logic guy
-  18:56:54 - 24/10/2025
+  fixed undo + lazy row flip
+  22:10 - 24/10/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -32,9 +33,9 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 
 int n, m, q;
 vector<vector<int>> tree;
-vector<int> ot, oa, ob, ans;
-vector<vector<int>> grid;
-vector<int> r;
+vector<int> ot, oa, ob, ans, r;
+vector<vector<char>> grid;
+vector<char> flip, vis, prv;
 int cnt;
 
 void f(int idx)
@@ -43,62 +44,65 @@ void f(int idx)
     if (t == 1)
     {
         int x = oa[idx], y = ob[idx];
-        if (grid[x][y] == 0)
+        char riel = grid[x][y] ^ flip[x];
+        if (riel == 0)
         {
-            grid[x][y] = 1;
+            vis[idx] = 1;
+            prv[idx] = riel;
+            grid[x][y] = (char)(1 ^ flip[x]);
             r[x]++, cnt++;
         }
+        else
+            vis[idx] = 0;
     }
     else if (t == 2)
     {
         int x = oa[idx], y = ob[idx];
-        if (grid[x][y] == 1)
+        char riel = grid[x][y] ^ flip[x];
+        if (riel == 1)
         {
-            grid[x][y] = 0;
+            vis[idx] = 1;
+            prv[idx] = riel;
+            grid[x][y] = (char)(0 ^ flip[x]);
             r[x]--, cnt--;
         }
+        else
+            vis[idx] = 0;
     }
     else if (t == 3)
     {
         int x = oa[idx];
-        for (int j = 1; j <= m; j++)
-            grid[x][j] = 1 - grid[x][j];
-        cnt -= r[x];
+        int d = m - 2 * r[x];
+        flip[x] ^= 1;
         r[x] = m - r[x];
-        cnt += r[x];
+        cnt += d;
+        vis[idx] = 0;
     }
+    else
+        vis[idx] = 0;
 }
 
 void ff(int idx)
 {
     int t = ot[idx];
-    if (t == 1)
+    if (t == 1 || t == 2)
     {
+        if (!vis[idx])
+            return;
         int x = oa[idx], y = ob[idx];
-        if (grid[x][y] == 1)
-        {
-            grid[x][y] = 0;
-            r[x] -= 1;
-            cnt -= 1;
-        }
-    }
-    else if (t == 2)
-    {
-        int x = oa[idx], y = ob[idx];
-        if (grid[x][y] == 0)
-        {
-            grid[x][y] = 1;
-            r[x]++, cnt++;
-        }
+        grid[x][y] = (char)(prv[idx] ^ flip[x]);
+        int d = (int)prv[idx] - (int)(grid[x][y] ^ flip[x]);
+        r[x] += d;
+        cnt += d;
+        vis[idx] = 0;
     }
     else if (t == 3)
     {
         int x = oa[idx];
-        for (int j = 1; j <= m; j++)
-            grid[x][j] = 1 - grid[x][j];
-        cnt -= r[x];
+        int d = m - 2 * r[x];
+        flip[x] ^= 1;
         r[x] = m - r[x];
-        cnt += r[x];
+        cnt += d;
     }
 }
 
@@ -118,13 +122,19 @@ void dfs(int v)
 void solve()
 {
     cin >> n >> m >> q;
-    tree.assign(q + 1, {}), ot.assign(q + 1, 0), oa.assign(q + 1, 0), ob.assign(q + 1, 0), ans.assign(q + 1, 0);
+    tree.assign(q + 1, {});
+    ot.assign(q + 1, 0);
+    oa.assign(q + 1, 0);
+    ob.assign(q + 1, 0);
+    ans.assign(q + 1, 0);
+    vis.assign(q + 1, 0);
+    prv.assign(q + 1, 0);
     for (int i = 1; i <= q; i++)
     {
         int t;
         cin >> t;
         ot[i] = t;
-        int par;
+        int par = 0;
         if (t == 1 || t == 2)
         {
             int x, y;
@@ -148,7 +158,8 @@ void solve()
         }
         tree[par].pb(i);
     }
-    grid.assign(n + 1, vector<int>(m + 1, 0));
+    grid.assign(n + 1, vector<char>(m + 1, 0));
+    flip.assign(n + 1, 0);
     r.assign(n + 1, 0);
     cnt = 0;
     dfs(0);
