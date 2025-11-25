@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  11:04:51 - 21/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,26 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "KIMTUTHAP"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> a(n, vector<int>(m));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> a[i][j];
+    vector<int> h(m, 0);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+            if (!a[i][j])
+                h[j] = 0;
+            else
+                h[j]++;
+        
+    }
 }
 
 signed main()
@@ -71,3 +70,4 @@ signed main()
 
     return 0;
 }
+

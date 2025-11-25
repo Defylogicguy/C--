@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  10:58:08 - 23/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,26 +28,56 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "1746"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
         cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
+
+    vector<vector<int>> dp(n, vector<int>(m + 2, 0));
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i == 0)
+        {
+            if (a[i] == 0)
+                for (int j = 1; j <= m; j++)
+                    dp[i][j] = 1;
+            else
+                dp[i][a[i]] = 1;
+        }
+        else
+        {
+            if (a[i] == 0)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    if (j - 1 >= 1)
+                        dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % MOD;
+                    dp[i][j] = (dp[i][j] + dp[i - 1][j]) % MOD;
+                    if (j + 1 <= m)
+                        dp[i][j] = (dp[i][j] + dp[i - 1][j + 1]) % MOD;
+                }
+            }
+            else
+            {
+                if (a[i] - 1 >= 1)
+                    dp[i][a[i]] = (dp[i][a[i]] + dp[i - 1][a[i] - 1]) % MOD;
+                dp[i][a[i]] = (dp[i][a[i]] + dp[i - 1][a[i]]) % MOD;
+                if (a[i] + 1 <= m)
+                    dp[i][a[i]] = (dp[i][a[i]] + dp[i - 1][a[i] + 1]) % MOD;
+            }
+        }
+    }
+
     int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
+    for (int i = 1; i <= m; i++)
+        ans = (ans + dp[n - 1][i]) % MOD;
+
     cout << ans;
 }
 

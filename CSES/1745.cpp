@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  11:07:41 - 23/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,37 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "1745"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+
+    vector<int> a(n);
+    int total = 0;
+    for (int &x : a)
+    {
+        cin >> x;
+        total += x;
+    }
+
+    vector<vector<bool>> dp(n + 1, vector<bool>(total, false));
+    dp[0][0] = true;
     for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+        for (int j = 0; j <= total; j++)
+        {
+            dp[i][j] = dp[i - 1][j];
+            if (j >= a[i - 1])
+                dp[i][j] = dp[i][j] | dp[i - 1][j - a[i - 1]];
+        }
+    vector<int> ans;
+    for (int i = 1; i <= total; i++)
+        if (dp[n][i])
+            ans.pb(i);
+    cout << ans.size() << endl;
+    for (int i : ans)
+        cout << i << ' ';
 }
 
 signed main()

@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  14:32:03 - 22/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,49 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "BARSPLIT"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+    int n, k, p;
+    cin >> n >> k >> p;
+    string s;
+    cin >> s;
+    s = " " + s;
+
+    vector<int> dp(n + 1), pf(n + 1);
+    dp[0] = pf[0] = 1;
+
+    int cl = 0;
+    int cnt = 0;
+
+    for (int i = 1; i <= n; ++i)
+    {
+        if (s[i] == 'X')
+            cnt++;
+        while (cnt > p)
+        {
+            cl++;
+            if (s[cl] == 'X')
+                cnt--;
+        }
+        int l = cl;
+        if (i - k > l)
+            l = i - k;
+        if (l < 0)
+            l = 0;
+            
+        if (l <= i - 1)
+        {
+            int t = (l - 1 >= 0) ? pf[l - 1] : 0;
+            dp[i] = (pf[i - 1] - t + MOD) % MOD;
+        }
+        else
+            dp[i] = 0;
+        (pf[i] = pf[i - 1] + dp[i]) %= MOD;
+    }
+
+    cout << dp[n] << '\n';
 }
 
 signed main()
@@ -64,7 +86,7 @@ signed main()
     cout.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();

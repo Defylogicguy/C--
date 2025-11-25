@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  11:00:56 - 23/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,82 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "2169"
+
+struct node
+{
+    int l, r, idx;
+};
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+    vector<node> a(n);
+    vector<int> r;
+
+    for (int i = 0; i < n; ++i)
+    {
+        cin >> a[i].l >> a[i].r;
+        a[i].idx = i;
+        r.pb(a[i].r);
+    }
+
+    sort(all(r));
+    r.erase(unique(all(r)), r.end());
+    auto gget = [&](int x)
+    {
+        return lower_bound(all(r), x) - r.begin() + 1;
+    };
+
+    sort(all(a), [](const node &a, const node &b)
+         { return a.l == b.l ? a.r > b.r : a.l < b.l; });
+
+    int m = r.size();
+    vector<int> f(m + 2, 0);
+
+    auto upd = [&](int i, int v)
+    {
+        while (i <= m)
+        {
+            f[i] += v;
+            i += i & -i;
+        }
+    };
+
+    auto get = [&](int i)
+    {
+        int res = 0;
+        while (i > 0)
+        {
+            res += f[i];
+            i -= i & -i;
+        }
+        return res;
+    };
+
+    vector<int> one(n), two(n);
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        int pos = gget(a[i].r);
+        one[a[i].idx] = get(pos);
+        upd(pos, 1);
+    }
+
+    fill(all(f), 0);
+    for (int i = 0; i < n; i++)
+    {
+        int pos = gget(a[i].r);
+        two[a[i].idx] = i - get(pos - 1);
+        upd(pos, 1);
+    }
+
+    for (int x : one)
+        cout << x << ' ';
+    cout << '\n';
+    for (int x : two)
+        cout << x << ' ';
 }
 
 signed main()

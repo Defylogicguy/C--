@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  11:06:51 - 23/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,34 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "1093"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
+
+    int total = n * (n + 1) / 2;
+    if (total & 1)
+    {
+        cout << 0;
+        return;
+    }
+
+    int x = total / 2;
+    vector<vector<int>> dp(n, vector<int>(x + 1));
+    dp[0][0] = 1;
+
     for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+    {
+        for (int j = 0; j <= x; j++)
+        {
+            dp[i][j] = dp[i - 1][j] + (j - i >= 0 ? dp[i - 1][j - i] : 0);
+            dp[i][j] %= MOD;
+        }
+    }
+
+    cout << dp[n - 1][x];
 }
 
 signed main()

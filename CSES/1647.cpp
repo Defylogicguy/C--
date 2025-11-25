@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  11:03:36 - 23/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,44 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "1647"
+
+const int N = 2e5 + 5;
+int a[N];
+int f[N][21];
+int lg[N];
+int n, q;
+int get(int l, int r)
+{
+    if (l > r)
+        return 0;
+    int t = lg[r - l + 1];
+    return min(f[l][t], f[r - (1 << t) + 1][t]);
+}
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
+    cin >> n >> q;
     for (int i = 1; i <= n; i++)
         cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+
+    for (int i = 1; i <= n; i++)
+    {
+        lg[i] = log2(i);
+        f[i][0] = a[i];
+    }
+
+    for (int j = 1; (1 << j) <= n; j++)
+        for (int i = 1; i + (1 << (j - 1)) <= n; i++)
+            f[i][j] = min(f[i][j - 1], f[i + (1 << (j - 1))][j - 1]);
+
+    while (q--)
+    {
+        int l, r;
+        cin >> l >> r;
+        int x = get(l, r);
+        cout << x << '\n';
+    }
 }
 
 signed main()

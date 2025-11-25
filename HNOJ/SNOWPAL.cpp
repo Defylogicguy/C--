@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:02:31 - 22/11/2025
+  14:31:53 - 21/11/2025
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,27 +28,40 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "BALANCE"
+#define NAME "SNOWPAL"
 
 void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++)
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
         cin >> a[i];
-    vector<int> pf(n + 1, LLONG_MAX);
-    pf[1] = a[1];
-    for (int i = 2; i <= n; i++)
-        pf[i] = min(pf[i - 1], a[i]);
-    vector<int> sf(n + 2, LLONG_MIN);
-    sf[n] = a[n];
-    for (int i = n - 1; i >= 1; i--)
-        sf[i] = max(sf[i + 1], a[i]);
-    int ans = 0;
-    for (int i = 1; i < n; i++)
-        ans += (pf[i] == sf[i + 1]);
-    cout << ans;
+
+    int i = 0, j = n - 1;
+    int cnt = 0;
+
+    while (i < j)
+    {
+        if (a[i] == a[j])
+        {
+            i++;
+            j--;
+        }
+        else if (a[i] < a[j])
+        {
+            a[i + 1] += a[i];
+            i++;
+            cnt++;
+        }
+        else
+        {
+            a[j - 1] += a[j];
+            j--;
+            cnt++;
+        }
+    }
+    cout << cnt;
 }
 
 signed main()
