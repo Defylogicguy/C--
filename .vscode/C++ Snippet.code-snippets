@@ -18,7 +18,7 @@
 			"template <typename T>",
 			"auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, string>::value, decltype(c.begin(), c.end(), os)>::type",
 			"{",
-			"\tfor (auto it = c.begin(); it != c.end(); ++it)",
+			"\tfor (auto it = c.begin(); it != c.end(); it++)",
 			"\t\tos << (it == c.begin() ? \"{\" : \", \") << *it;",
 			"\treturn os << \"}\";",
 			"}",
