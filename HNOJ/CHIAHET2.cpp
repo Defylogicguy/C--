@@ -14,38 +14,35 @@ using namespace std;
 #define endl '\n'
 #define NAME "CHIAHET2"
 
-void solve()
-{
-    int n, x;
-    cin >> n >> x;
+void solve() {
+  int n, x;
+  cin >> n >> x;
 
-    int l = pow(10, n - 1);
-    int r = pow(10, n) - 1;
-    int two = (1LL << x);
-    int _min = (l + two - 1) / two * two;
-    int _max = (r / two) * two;
-    if (_min > r or _max < l)
-        cout << 0 << endl;
-    else
-        cout << (_max - _min) / two + 1 << endl;
-}ư
+  int l = pow(10, n - 1);
+  int r = pow(10, n) - 1;
+  int two = (1LL << x);
+  int _min = (l + two - 1) / two * two;
+  int _max = (r / two) * two;
+  if (_min > r or _max < l)
+    cout << 0 << endl;
+  else
+    cout << (_max - _min) / two + 1 << endl;
+}
 
-signed main()
-{
-    if (fopen(NAME ".INP", "r"))
-    {
-        freopen(NAME ".INP", "r", stdin);
-        freopen(NAME ".OUT", "w", stdout);
-    }
+signed main() {
+  if (fopen(NAME ".INP", "r")) {
+    freopen(NAME ".INP", "r", stdin);
+    freopen(NAME ".OUT", "w", stdout);
+  }
 
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout.tie(nullptr);
 
-    int tt = 1;
-    cin >> tt;
+  int tt = 1;
+  cin >> tt;
 
-    while (tt--)
-        solve();
-    return 0;
+  while (tt--)
+    solve();
+  return 0;
 }

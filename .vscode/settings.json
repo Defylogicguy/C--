@@ -90,7 +90,10 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "generator": "cpp",
+        "text_encoding": "cpp",
+        "print": "cpp"
     },
     "discord.enabled": true,
     "python.testing.unittestArgs": [
@@ -102,4 +105,27 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
+    "autoSnippet.snippets": [
+        {
+            "language" : "cpp",
+            "snippet" : "C++ code snippet",
+        }
+    ],
+    "C_Cpp.errorSquiggles": "disabled",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.acceptSuggestionOnEnter": "on",
+    "files.exclude": {
+        "**/$RECYCLE.BIN": true,
+        "**/System Volume Information": true,
+        "**/Testcases":true,
+    },
+    "search.exclude": {
+        "**/$RECYCLE.BIN": true,
+        "**/System Volume Information": true
+    }
 }
