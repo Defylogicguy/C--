@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  23:09:18 - 04/01/2026
+  22:40:10 - 09/01/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,7 +28,31 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "TPS_HSGHN_L9_22_23"
+#define NAME "dsu"
+
+struct DSU
+{
+    DSU(int n = 0) { init(n); }
+    vector<int> par, sz;
+    void init(int n)
+    {
+        par.resize(n + 1);
+        iota(all(par), 0);
+        sz.assign(n + 1, 1);
+    }
+    int find(int x) { return par[x] = (par[x] == x ? x : find(par[x])); }
+    int size(int x) { return sz[find(x)]; }
+    bool same(int x, int y) { return find(x) == find(y); }
+    void uni(int x, int y)
+    {
+        x = find(x);
+        y = find(y);
+        if (x == y)
+            return;
+        par[y] = x;
+        sz[x] += sz[y];
+    }
+};
 
 void solve()
 {
