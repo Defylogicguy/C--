@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  15:03:42 - 31/01/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,44 +28,25 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "LUYENDE2025_CONTEST2_B3"
 
 void solve()
 {
     int n;
     cin >> n;
-    map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        int m = floor(sqrt(x));
+        while ((m + 1) * (m + 1) <= x)
+            m++;
+        while (m * m > x)
+            m--;
+        int d = x - m * m;
+        int sign = ((m + 1) % 2 == 0) ? 1 : -1;
+        cout << sign * (m - d) << ' ';
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
 }
 
 signed main()
@@ -81,8 +62,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

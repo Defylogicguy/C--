@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  19:24:09 - 06/02/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,44 +28,33 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "COW_REV"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int n, k, d;
+    cin >> n >> k >> d;
+    vector<int> a(n + 1);
+    iota(all(a), 0);
+    for (int i = 0; i < k; i++)
     {
-        int x;
-        cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        int l, r;
+        cin >> l >> r;
+        reverse(a.begin() + l, a.begin() + r + 1);
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
+    vector<vector<int>> up(n + 1, vector<int>(31));
+    for (int i = 1; i <= n; i++)
+        up[i][0] = a[i];
+    for (int j = 1; j < 31; j++)
+        for (int i = 1; i <= n; i++)
+            up[i][j] = up[up[i][j - 1]][j - 1];
+    iota(all(a), 0);
+    for (int j = 30; j >= 0; j--)
+        if (d >> j & 1)
+            for (int i = 1; i <= n; i++)
+                a[i] = up[a[i]][j];
+    for (int i = 1; i <= n; i++)
+        cout << a[i] << ' ';
 }
 
 signed main()
@@ -81,8 +70,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

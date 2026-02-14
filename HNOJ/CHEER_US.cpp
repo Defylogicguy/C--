@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  21:26:32 - 02/02/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,44 +28,63 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
+#define NAME "CHEER_US"
 
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
+struct DSU
 {
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+    DSU(int n = 0) { init(n); }
+    vector<int> par, sz;
+    void init(int n)
+    {
+        par.resize(n + 1);
+        iota(all(par), 0);
+        sz.assign(n + 1, 1);
+    }
+    int find(int x) { return par[x] = (par[x] == x ? x : find(par[x])); }
+    int size(int x) { return sz[find(x)]; }
+    bool same(int x, int y) { return find(x) == find(y); }
+    void uni(int x, int y)
+    {
+        x = find(x);
+        y = find(y);
+        if (x == y)
+            return;
+        par[y] = x;
+        sz[x] += sz[y];
+    }
+};
+
+struct node
+{
+    int u, v, w;
+    node(int u = 0, int v = 0, int w = 0) : u(u), v(v), w(w) {}
+    bool operator<(const node &o) const { return w < o.w; }
+};
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int n, p;
+    cin >> n >> p;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    vector<node> v(p);
+    for (int i = 0; i < p; i++)
     {
-        int x;
-        cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        cin >> v[i].u >> v[i].v >> v[i].w;
+        v[i].w += v[i].w + a[v[i].u] + a[v[i].v];
     }
+    sort(all(v));
+    DSU dsu(p);
     int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
+    for (auto &[u, vv, w] : v)
+    {
+        if (dsu.same(u, vv))
+            continue;
+        dsu.uni(u, vv);
+        ans += w;
+    }
+    cout << ans + *min_element(1 + all(a));
 }
 
 signed main()
@@ -81,8 +100,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

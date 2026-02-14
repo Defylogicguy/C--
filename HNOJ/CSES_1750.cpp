@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  18:59:20 - 06/02/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,7 +19,7 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
     return os << "}";
 }
 #define dbg(x) cerr << #x << " = " << (x) << '\n';
-#define int long long
+// #define int long long
 #define float double
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
@@ -28,44 +28,30 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "CSES_1750"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int n, q;
+    cin >> n >> q;
+    vector<vector<int>> up(n + 1, vector<int>(30));
+    for (int i = 1; i <= n; i++)
+        cin >> up[i][0];
+
+    for (int j = 1; j < 30; j++)
+        for (int i = 1; i <= n; i++)
+            up[i][j] = up[up[i][j - 1]][j - 1];
+
+    while (q--)
     {
-        int x;
-        cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        int x, k;
+        cin >> x >> k;
+        int ans = x;
+        for (int j = 0; j < 30; j++)
+            if ((k >> j) & 1)
+                ans = up[ans][j];
+        cout << ans << '\n';
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
 }
 
 signed main()
@@ -81,8 +67,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

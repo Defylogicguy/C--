@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  14:50:19 - 07/02/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,44 +28,75 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "LUYENDE2025_CONTEST3_B4"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
+        cin >> a[i], a[i] %= k;
+    if (n >= k)
     {
-        int x;
-        cin >> x;
-        int t = 1;
-        while (x > 1)
+        map<int, int> mp;
+        int cur = 0;
+        mp[cur] = 0;
+        for (int i = 0; i < n; i++)
         {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
+            cur = (cur + a[i]) % k;
+            if (mp.count(cur))
+            {
+                for (int j = mp[cur] + 1; j <= i + 1; j++)
+                    cout << j << ' ';
+                return;
+            }
+            mp[cur] = i + 1;
         }
-        mp[t]++;
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
+    vector<int> path;
+    bool flag = false;
+
+    function<void(int, int)> dfs = [&](int i, int cur)
+    {
+        if (flag)
+            return;
+
+        if (i == n)
+        {
+            if (path.size() && cur == 0)
+                flag = true;
+            return;
+        }
+
+        dfs(i + 1, cur);
+        if (flag)
+            return;
+
+        path.pb(i + 1);
+        dfs(i + 1, (cur + a[i]) % k);
+        if (flag)
+            return;
+
+        path.pop_back();
+
+        path.pb(-(i + 1));
+        dfs(i + 1, (cur - a[i] + k) % k);
+        if (flag)
+            return;
+        path.pop_back();
+    };
+
+    dfs(0, 0);
+
+    if (!flag)
+    {
+        cout << 0 << '\n';
+        return;
+    }
+
+    for (int x : path)
+        cout << x << ' ';
 }
 
 signed main()
@@ -81,8 +112,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

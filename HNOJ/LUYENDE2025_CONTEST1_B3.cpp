@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  14:47:12 - 24/01/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,43 +28,39 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "LUYENDE2025_CONTEST1_B3"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
+    int m, n;
+    cin >> n >> m;
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
+        cin >> a[i];
+    sort(all(a));
+    vector<int> pf(n + 1, 0);
+    partial_sum(all(a), pf.begin() + 1);
+    int ans = LLONG_MAX;
+    for (int i = m; i <= n; i++)
     {
-        int x;
-        cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        int plus = 0, minus = 0;
+        int mid = (pf[i] - pf[i - m]) / m;
+        for (int j = i - m; j < i; j++)
+            if (a[j] > mid)
+                plus += a[j] - mid;
+            else if (a[j] < mid)
+                minus += mid - a[j];
+        if (mid * m <= pf[n])
+            ans = min(ans, max(plus, minus));
+        plus = 0, minus = 0, mid++;
+        for (int j = i - m; j < i; j++)
+            if (a[j] > mid)
+                plus += a[j] - mid;
+            else if (a[j] < mid)
+                minus += mid - a[j];
+        if (mid * m <= pf[n])
+            ans = min(ans, max(plus, minus));
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
     cout << ans;
 }
 
@@ -81,8 +77,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();

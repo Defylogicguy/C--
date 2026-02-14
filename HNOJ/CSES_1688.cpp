@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  14:41:49 - 13/12/2025
+  20:28:08 - 06/02/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,44 +28,52 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "OLPSV2025_CAPSO"
-
-const int maxn = 1e6 + 5;
-int lpf[maxn];
-
-void sieve()
-{
-    iota(lpf, lpf + maxn, 0);
-    for (int i = 2; i * i <= maxn; i++)
-        if (lpf[i] == i)
-            for (int j = i * i; j <= maxn; j += i)
-                if (lpf[j] == j)
-                    lpf[j] = i;
-}
+#define NAME "CSES_1688"
 
 void solve()
 {
-    int n;
-    cin >> n;
-    map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    int n, q;
+    cin >> n >> q;
+    vector<vector<int>> up(n + 1, vector<int>(19, -1));
+    vector<int> d(n + 1, 0);
+
+    for (int i = 2; i <= n; i++)
     {
         int x;
         cin >> x;
-        int t = 1;
-        while (x > 1)
-        {
-            int p = lpf[x], cnt = 0;
-            while (x % p == 0)
-                x /= p, cnt++;
-            t *= (cnt & 1 ? p : 1);
-        }
-        mp[t]++;
+        up[i][0] = x;
+        d[i] = d[x] + 1;
     }
-    int ans = 0;
-    for (auto it : mp)
-        ans += it.second * (it.second - 1) / 2;
-    cout << ans;
+
+    for (int j = 1; j < 19; j++)
+        for (int i = 1; i <= n; i++)
+            if (up[i][j - 1] != -1)
+                up[i][j] = up[up[i][j - 1]][j - 1]; // to tien thu 2^j cua i
+
+    while (q--)
+    {
+        int u, v;
+        cin >> u >> v;
+        if (d[u] < d[v])
+            swap(u, v);
+
+        int k = d[u] - d[v];
+        for (int i = 0; i < 19; i++)
+            if ((k >> i) & 1)
+                u = up[u][i];
+
+        if (u == v)
+        {
+            cout << u << '\n';
+            continue;
+        }
+
+        for (int i = 18; i >= 0; i--)
+            if (up[u][i] != up[v][i])
+                u = up[u][i], v = up[v][i];
+
+        cout << up[u][0] << '\n';
+    }
 }
 
 signed main()
@@ -81,8 +89,6 @@ signed main()
 
     int tt = 1;
     // cin >> tt;
-
-    sieve();
 
     while (tt--)
         solve();
