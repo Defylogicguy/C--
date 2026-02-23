@@ -14,6 +14,7 @@ using namespace std;
 #define pb push_back
 #define MOD 1000000007
 #define NAME "DQUERY"
+
 int s;
 struct Query
 {
