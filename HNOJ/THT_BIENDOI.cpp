@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  23:09:18 - 04/01/2026
+  18:18:43 - 20/03/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,10 +28,23 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "TPS_HSGHN_L9_22_23"
+#define NAME "THT_BIENDOI"
 
 void solve()
 {
+    int n;
+    cin >> n;
+    int t = n, two = 0, tri = 0;
+    while (t % 3 == 0)
+        t /= 3, tri++;
+    while (t % 2 == 0)
+        t /= 2, two++;
+    if (t > 1 or two < tri)
+    {
+        cout << -1;
+        return;
+    }
+    cout << two * 2 - tri;
 }
 
 signed main()
