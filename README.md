@@ -8,7 +8,7 @@ Welcome to **C--**, a personal archive where I store all the programming problem
 
 This repository contains code solutions (and some WIPs) from a variety of **Online Judges (OJs)**, including:
 
-- **[Codeforces](https://codeforces.com/)** (I don't upload anymore)
+- **[Codeforces](https://codeforces.com/)**
 - **[CSP by VNOI](https://csp.vnoi.info/)**
 - **[HNOJ (Hanoi Online Judge)](https://hnoj.edu.vn/)**
 - **[Atcoder](https://atcoder.jp/)**
