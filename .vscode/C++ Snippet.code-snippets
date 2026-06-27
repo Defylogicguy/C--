@@ -24,7 +24,6 @@
 			"}",
 			"#define dbg(x) cerr << #x << \" = \" << (x) << '\\n';",
 			"#define int long long",
-			"#define float double",
 			"#define all(x) x.begin(), x.end()",
 			"#define rall(x) x.rbegin(), x.rend()",
 			"#define maxall(x) *max_element(all(x))",
