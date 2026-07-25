@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  20:08:52 - 21/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,56 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "BINLADEN"
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
+    int n, m;
+    cin >> n >> m;
+    auto f = [&](int f, int r)
+    { return f * m + r; };
+    int t = (n + 1) * m;
+    vector<vector<pair<int, int>>> adj(t);
     for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
-    for (int i = 0; i < m; i++)
     {
-        int u, v, w;
-        cin >> u >> v >> w;
-        if (w < d[u][v])
+        for (int j = 0; j < m; j++)
         {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
+            int w;
+            cin >> w;
+            int u = f(i - 1, j), v = f(i, j);
+            adj[u].pb({v, w});
+            adj[v].pb({u, w});
+        }
+        for (int j = 0; j < m - 1; j++)
+        {
+            int w;
+            cin >> w;
+            int u = f(i, j), v = f(i, j + 1);
+            adj[u].pb({v, w});
+            adj[v].pb({u, w});
         }
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    vector<int> d(t, LLONG_MAX);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    for (int j = 0; j < m; j++)
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
-        {
-            if (nxt[u][v] == -1)
+        d[f(0, j)] = 0;
+        pq.push({0, f(0, j)});
+    }
+    while (pq.size())
+    {
+        auto [dd, u] = pq.top();
+        pq.pop();
+        if (dd != d[u])
+            continue;
+        for (auto [v, w] : adj[u])
+            if (d[v] > dd + w)
             {
-                cout << "-1\n";
-                continue;
+                d[v] = dd + w;
+                pq.push({d[v], v});
             }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
-        }
     }
+    cout << d[f(n, m - 1)] << '\n';
 }
 
 signed main()

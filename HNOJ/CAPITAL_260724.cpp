@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  19:56:42 - 24/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,64 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "CAPITAL_260724"
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
-    for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
-    for (int i = 0; i < m; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> adj(n + 1);
+    while (m--)
     {
-        int u, v, w;
-        cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
+        int u, v;
+        cin >> u >> v;
+        adj[u].pb(v);
+        adj[v].pb(u);
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    vector<int> num(n + 1, 0), low(n + 1), cnt(n + 1, 0), dis(n + 1, 0);
+    vector<bool> root(n + 1, false);
+    int cur = 0, total = 0;
+    function<void(int, int)> dfs = [&](int u, int p)
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
+        num[u] = low[u] = ++cur;
+        for (int v : adj[u])
         {
-            if (nxt[u][v] == -1)
-            {
-                cout << "-1\n";
+            if (v == p)
                 continue;
+            if (!num[v])
+            {
+                cnt[u]++;
+                dfs(v, u);
+                low[u] = min(low[u], low[v]);
+                if (!root[u] and low[v] >= num[u])
+                    dis[u]++;
             }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
+            else
+                low[u] = min(low[u], num[v]);
+        }
+    };
+    for (int i = 1; i <= n; i++)
+        if (!num[i])
+        {
+            total++;
+            root[i] = true;
+            dfs(i, 0);
+        }
+    int ans = 0, mx = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int t;
+        if (root[i])
+            t = cnt[i];
+        else
+            t = dis[i] + 1;
+        if (t + total - 1 > ans)
+        {
+            ans = t + total - 1;
+            mx = i;
         }
     }
+    cout << ans << ' ' << mx;
 }
 
 signed main()

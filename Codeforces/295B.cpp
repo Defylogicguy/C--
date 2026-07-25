@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  20:50:03 - 18/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,38 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "295B"
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
+    int n;
+    cin >> n;
+    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX));
     for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
-    for (int i = 0; i < m; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> d[i][j];
+    vector<int> a(n);
+    vector<bool> check(n + 1, false);
+    for (int i = 0; i < n; i++)
+        cin >> a[i], check[a[i]] = true;
+    reverse(all(a));
+    vector<int> ans;
+    for (int x : a)
     {
-        int u, v, w;
-        cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
-    }
-    for (int k = 1; k <= n; k++)
+        check[x] = false;
         for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
+            for (int j = 1; j <= n; j++)
+                d[i][j] = min(d[i][j], d[i][x] + d[x][j]);
+        int sum = 0;
+        for (int i = 1; i <= n; i++)
+            if (!check[i])
                 for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
-    {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
-        {
-            if (nxt[u][v] == -1)
-            {
-                cout << "-1\n";
-                continue;
-            }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
-        }
+                    if (!check[j])
+                        sum += d[i][j];
+        ans.pb(sum);
     }
+    for (int i = n - 1; i >= 0; i --)
+        cout << ans[i] << ' ';
 }
 
 signed main()

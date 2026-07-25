@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  20:58:22 - 21/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,57 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "1195"
+
+struct node
+{
+    int u;
+    bool c;
+};
+
+struct cmp
+{
+    bool operator()(const pair<int, node> &a, const pair<int, node> &b) { return a.first > b.first; }
+};
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
-    for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
-    for (int i = 0; i < m; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<vector<pair<node, int>>>> adj(n + 1, vector<vector<pair<node, int>>>(2));
+    while (m--)
     {
         int u, v, w;
         cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
+        adj[u][0].pb({{v, 0}, w});
+        adj[u][0].pb({{v, 1}, w / 2});
+        adj[u][1].pb({{v, 1}, w});
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    heap<pair<int, node>, vector<pair<int, node>>, cmp> pq;
+    vector<vector<int>> d(n + 1, vector<int>(2, LLONG_MAX));
+    d[1][0] = 0;
+    pq.push({0, {1, 0}});
+    while (pq.size())
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
+        auto tp = pq.top();
+        pq.pop();
+        int cur = tp.first;
+        int u = tp.second.u;
+        int idk = tp.second.c;
+        if (cur != d[u][idk])
+            continue;
+        for (auto &v : adj[u][idk])
         {
-            if (nxt[u][v] == -1)
+            node nxt = v.first;
+            int w = v.second;
+            if (cur + w < d[nxt.u][nxt.c])
             {
-                cout << "-1\n";
-                continue;
+                d[nxt.u][nxt.c] = cur + w;
+                pq.push({d[nxt.u][nxt.c], nxt});
             }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
         }
     }
+    cout << min(d[n][0], d[n][1]);
 }
 
 signed main()

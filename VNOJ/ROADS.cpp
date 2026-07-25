@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  19:39:11 - 25/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,52 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "ROADS"
+
+struct node
+{
+    int v, l, c;
+    node(int v = 0, int l = 0, int c = 0) : v(v), l(l), c(c) {}
+    const bool operator<(const node &o) const { return l > o.l; }
+};
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
-    for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
+    int k, n, m;
+    cin >> k >> n >> m;
+    vector<vector<node>> adj(n + 1);
     for (int i = 0; i < m; i++)
     {
-        int u, v, w;
-        cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
+        int u, v, l, c;
+        cin >> u >> v >> l >> c;
+        adj[u].pb(node(v, l, c));
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    vector<vector<int>> d(n + 1, vector<int>(k + 1, INT_MAX));
+    d[1][k] = 0;
+    heap<node> q;
+    q.push(node(1, 0, k));
+    while (q.size())
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
+        int u = q.top().v, ll = q.top().l, cc = q.top().c;
+        q.pop();
+        if (ll > d[u][cc])
+            continue;
+        if (u == n)
         {
-            if (nxt[u][v] == -1)
+            cout << ll << '\n';
+            return;
+        }
+        for (node it : adj[u])
+        {
+            int v = it.v, w = it.l, c = it.c;
+            if (cc >= c and d[v][cc - c] > ll + w)
             {
-                cout << "-1\n";
-                continue;
+                d[v][cc - c] = ll + w;
+                q.push(node(v, d[v][cc - c], cc - c));
             }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
         }
     }
+    cout << -1 << '\n';
 }
 
 signed main()
@@ -91,7 +87,7 @@ signed main()
     cin.tie(nullptr);
 
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
 
     while (tt--)
         solve();

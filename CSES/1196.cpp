@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  20:34:27 - 25/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,55 +27,38 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "1196"
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
-    for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<vector<pair<int, int>>> adj(n + 1);
     for (int i = 0; i < m; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
+        adj[u].pb({v, w});
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    heap<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    vector<int> cnt(n + 1, 0), ans;
+    pq.push({0, 1});
+    int cur = 0;
+    while (pq.size() and cur < k)
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
+        auto [d, u] = pq.top();
+        pq.pop();
+        if (cnt[u] >= k)
+            continue;
+        cnt[u]++;
+        if (u == n)
         {
-            if (nxt[u][v] == -1)
-            {
-                cout << "-1\n";
-                continue;
-            }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
+            cur++;
+            cout << d << ' ';
         }
+        for (auto [v, w] : adj[u])
+            if (cnt[v] < k)
+                pq.push({d + w, v});
     }
 }
 

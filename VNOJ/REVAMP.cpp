@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  20:28:30 - 18/07/2026
+  21:40:11 - 21/07/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,56 +27,48 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME "FLOYD"
+#define NAME "REVAMP"
 
 void solve()
 {
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vector<int>> d(n + 1, vector<int>(n + 1, INT_MAX)), nxt(n + 1, vector<int>(n + 1, -1));
-    for (int i = 1; i <= n; i++)
-        d[i][i] = 0, nxt[i][i] = i;
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<vector<pair<int, int>>> adj(n + 1);
     for (int i = 0; i < m; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
-        if (w < d[u][v])
-        {
-            d[u][v] = d[v][u] = w;
-            nxt[u][v] = v, nxt[v][u] = u;
-        }
+        adj[u].pb({v, w});
+        adj[v].pb({u, w});
     }
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            if (d[i][k] != INT_MAX)
-                for (int j = 1; j <= n; j++)
-                    if (d[k][j] != INT_MAX)
-                        if (d[i][j] > d[i][k] + d[k][j])
-                            d[i][j] = min(d[i][j], d[i][k] + d[k][j]), nxt[i][j] = nxt[i][k];
-    while (q--)
+    vector<vector<int>> d(n + 1, vector<int>(k + 1, LLONG_MAX));
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> pq;
+    d[1][0] = 0;
+    pq.push({0, 1, 0});
+    while (pq.size())
     {
-        int t, u, v;
-        cin >> t >> u >> v;
-        if (t == 0)
-            cout << (d[u][v] == INT_MAX ? -1 : d[u][v]) << '\n';
-        else
+        auto [l, u, ud] = pq.top();
+        pq.pop();
+        if (l > d[u][ud])
+            continue;
+        for (auto [v, w] : adj[u])
         {
-            if (nxt[u][v] == -1)
+            if (d[v][ud] > l + w)
             {
-                cout << "-1\n";
-                continue;
+                d[v][ud] = l + w;
+                pq.push({d[v][ud], v, ud});
             }
-            vector<int> path;
-            int cur = u;
-            while (cur != v)
-                path.pb(cur), cur = nxt[cur][v];
-            path.pb(v);
-            cout << path.size() << ' ';
-            for (int x : path)
-                cout << x << ' ';
-            cout << '\n';
+            if (ud < k and d[v][ud + 1] > l)
+            {
+                d[v][ud + 1] = l;
+                pq.push({d[v][ud + 1], v, ud + 1});
+            }
         }
     }
+    int ans = LLONG_MAX;
+    for (int j = 0; j <= k; j++)
+        ans = min(ans, d[n][j]);
+    cout << ans;
 }
 
 signed main()
