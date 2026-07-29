@@ -12,13 +12,13 @@ using namespace std;
 #define endl '\n'
 #define NAME "SIMILAR"
 
-struct State
+struct node
 {
     int len, link;
     map<int, int> next;
 };
 
-void extend(int c, vector<State> &states, int &size, int &last)
+void extend(int c, vector<node> &states, int &size, int &last)
 {
     int p = last;
     int curr = size++;
@@ -80,7 +80,7 @@ void solve()
         diff[i] = a[i + 1] - a[i];
     }
 
-    vector<State> states;
+    vector<node> states;
     states.emplace_back();
     states[0].len = 0;
     states[0].link = -1;
