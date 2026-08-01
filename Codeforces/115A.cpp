@@ -1,6 +1,6 @@
 /*************************
   Author: Defy logic guy
-  22:38:46 - 29/07/2026
+  19:35:42 - 01/08/2026
 *************************/
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,18 +27,37 @@ auto operator<<(ostream &os, const T &c) -> typename enable_if<!is_same<T, strin
 #define heap priority_queue
 #define pb push_back
 #define MOD 1000000007
-#define NAME ".idk"
+#define NAME "115A"
 
 void solve()
 {
     int n;
     cin >> n;
-    for (int i = 0, x; i < n; i++)
+    vector<int> par(n + 1);
+    for (int i = 1; i <= n; i++)
+        cin >> par[i];
+    vector<int> d(n + 1, 0);
+    int mx = 0;
+    for (int i = 1; i <= n; i++)
     {
-        cin >> x;
-        cout << x;
+        if (d[i])
+        {
+            mx = max(mx, d[i]);
+            continue;
+        }
+        int u = i;
+        vector<int> v;
+        while (u != -1 and d[u] == 0)
+        {
+            v.pb(u);
+            u = par[u];
+        }
+        int cur = (u == -1 ? 0 : d[u]);
+        for (int j = v.size() - 1; j >= 0; j--)
+            cur += 1, d[v[j]] = cur;
+        mx = max(mx, cur);
     }
-    cout << '\n';
+    cout << mx;
 }
 
 signed main()
